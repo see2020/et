@@ -1,0 +1,54 @@
+.nyroModalBg {
+	position: fixed;
+	overflow: hidden;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: #000;
+	opacity: 0.7;
+	
+_position: absolute; 
+_top: expression(eval(document.documentElement.scrollTop)); 
+}
+.nmReposition {
+	position: absolute;
+}
+.nyroModalCloseButton {
+	top: -13px;
+	right: -13px;
+	width: 12px;
+	height: 12px;
+	text-indent: -9999em;
+	background: url(../img/close.gif);
+}
+.nyroModalTitle {
+	top: -26px;
+	left: 0;
+	margin: 0;
+    font-size: 1.1em;
+	color: #ddd;
+}
+.nyroModalCont {
+	position: absolute;
+	border: 4px solid #777;
+	margin: 25px;
+	background: #fff;
+}
+
+.nyroModalError {
+	border: 4px solid red;
+	color: red;
+	width: 250px;
+	height: 250px;
+}
+.nyroModalError div {
+	min-width: 0;
+	min-height: 0;
+	padding: 10px;
+}
+.nyroModalLink, .nyroModalDom, .nyroModalForm, .nyroModalFormFile {
+	position: relative;
+	padding: 10px;
+	width: 640px;
+}
