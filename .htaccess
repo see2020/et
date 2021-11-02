@@ -1,0 +1,21 @@
+Options Indexes
+IndexIgnore *.php* *.ini *.inc *.log *.tpl *.class
+
+# запрет вывода листинга файлов в директориях без индекса
+#Options -Indexes
+
+AddDefaultCharset windows-1251
+
+#ErrorDocument 301 /?event=error&num=301
+#ErrorDocument 302 /?event=error&num=302
+#ErrorDocument 401 /?event=error&num=401
+#ErrorDocument 403 /?event=error&num=403
+#ErrorDocument 404 /?event=error&num=404
+#ErrorDocument 500 /?event=error&num=500
+#RewriteEngine on
+
+# запрещаем доступ, из вне (по прямой ссылке), к файлам определенных типов
+<FilesMatch ".(htaccess|ini|log|tpl|inc|class)$">
+	Order Allow,Deny
+	Deny from all
+</FilesMatch>
