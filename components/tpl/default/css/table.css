@@ -1,0 +1,74 @@
+.tab_list, .tab_print {
+	width: 100%;
+	color: #494c74;		
+	/*font-size: 10px;*/
+}
+
+.tab_list td, 
+.tab_print td {
+	background-color:#ffffff;
+}
+.tab_list th {
+	background-color:#b9c9fe;
+	background-image: url(images/fhbg.gif);
+	background-repeat: repeat-x;
+	background-position: bottom;
+	cursor: pointer;	
+	height: 21px;
+	
+	border-top: 0px solid #5C98FC;
+	border-left: 0px solid #ffffff;
+	border-right: 0px solid #5C98FC;
+	border-bottom: 0px solid #6678b1;
+	border-collapse:collapse;
+	/*padding: 2px 2px 2px 2px;*/
+
+}
+.tab_print th {
+	background-color:#b9c9fe;
+	background-repeat: repeat-x;
+	background-position: bottom;
+	/*cursor: pointer;	*/
+	height: 21px;
+	border-top: 0px solid #5C98FC;
+	border-left: 0px solid #ffffff;
+	border-right: 0px solid #5C98FC;
+	border-bottom: 0px solid #6678b1;
+	border-collapse:collapse;
+	/*padding: 2px 2px 2px 2px;*/
+}
+.tab_list, .tab_list tr, .tab_list td,
+.tab_print, .tab_print tr, .tab_print td{
+	border-top: 0px solid #5C98FC;
+	border-left: 1px solid #ffffff;
+	border-right: 0px solid #5C98FC;
+	border-bottom: 1px solid #cccccc;
+	border-collapse:collapse; /* Убираем двойные линии */
+	/*padding: 4px 5px 4px 5px;*/
+	padding: 7px 7px 7px 7px;
+}
+.tab_list *{
+	/*font-size: 14px !important;*/
+}
+
+
+.tab_list tbody tr:hover td{
+	background-color: #f2f2f2;
+	border-bottom: 1px solid #6678b1;
+}
+.tab_list tbody tr td:hover{
+	/*cursor: pointer;*/
+}
+.tab_list .tr_row1 td{
+	background-color: #00c602;
+}
+.tab_list .tr_row2 td{
+	background-color: #feff4f;
+}
+.tab_list .tr_row3 td{
+	background-color: #9736c7;
+	color:#ffffff;
+}
+.tab_list .tr_row4 td{
+	background-color: #77d8ff;
+}
