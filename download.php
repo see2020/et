@@ -1,5 +1,6 @@
 <?php
 //qweqweqeqweqqqeweq
+//qweqweqeqweqqqeweq ------------
 	session_start();
 	
 	$cmsPathRelative = ".";
