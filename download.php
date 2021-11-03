@@ -1,4 +1,5 @@
 <?php
+//qweqweqeqweqqqeweq
 	session_start();
 	
 	$cmsPathRelative = ".";
