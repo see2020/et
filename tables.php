@@ -1,8 +1,8 @@
 <?php
 	session_start();
-	
-	$cmsPathRelative = ".";
-	include($cmsPathRelative."/config.php");
+
+	include("cfg.php");
+	include(ET_PATH_RELATIVE . DS . "config.php");
 
 	$sql->sql_connect();
 
@@ -64,13 +64,13 @@
 	if(isset($_GET['print'])){ $PrintPage = true; }
 	
 	// тема оформления
-	$TblDefTplPath = $arrSetting['Path']['tpl']."/".$arrSetting['Table']['DefaultTpl'];
-	if(isset($TblSetting['table']['tpl']) && $TblSetting['table']['tpl']!=""){$TblDefTplPath = $arrSetting['Path']['tpl']."/".$TblSetting['table']['tpl'];}
+	$TblDefTplPath = $arrSetting['Path']['tpl'] . DS . $arrSetting['Table']['DefaultTpl'];
+	if(isset($TblSetting['table']['tpl']) && $TblSetting['table']['tpl']!=""){$TblDefTplPath = $arrSetting['Path']['tpl'] . DS . $TblSetting['table']['tpl'];}
 	
-	if(file_exists($TblDefTplPath."/top.php")){include($TblDefTplPath."/top.php");}
+	if(file_exists($TblDefTplPath . DS . "top.php")){include($TblDefTplPath . DS . "top.php");}
 	
 	// выполняем функцию перед загрузкой
-	$func_file = $arrSetting["Path"]["tbldata"]."/".$TblSetting["table"]["name"]."/tFunction/".$TblSetting["table"]["BeforeLoading"];
+	$func_file = $arrSetting["Path"]["tbldata"] . DS . $TblSetting["table"]["name"] . DS . "tFunction" . DS . $TblSetting["table"]["BeforeLoading"];
 	if(file_exists($func_file) && is_file($func_file)){include($func_file);}$func_file = "";
 	
 	if(!isset($_GET['event'])){
@@ -87,10 +87,10 @@
 	}
 		
 	// выполняем функцию после загрузки списка таблицы
-	$func_file = $arrSetting["Path"]["tbldata"]."/".$TblSetting["table"]["name"]."/tFunction/".$TblSetting["table"]["AfterLoading"];
+	$func_file = $arrSetting["Path"]["tbldata"] . DS . $TblSetting["table"]["name"] . DS . "tFunction" . DS . $TblSetting["table"]["AfterLoading"];
 	if(file_exists($func_file) && is_file($func_file)){include($func_file);}$func_file = "";
 		
-	if(file_exists($TblDefTplPath."/bottom.php")){include($TblDefTplPath."/bottom.php");}
+	if(file_exists($TblDefTplPath . DS . "bottom.php")){include($TblDefTplPath . DS . "bottom.php");}
 	$sql->sql_close();
 
 ?>

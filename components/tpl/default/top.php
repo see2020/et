@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="<?php echo $TblDefTplPath; ?>/css/menu.css" />
 	<script type="text/javascript" src="<?php echo $TblDefTplPath; ?>/js/jquery.min.js"></script>
 <?php
-if($PrintPage){
+if(!empty($PrintPage)){
 	echo '<link rel="stylesheet" href="'.$TblDefTplPath.'/css/print.css" />';
 }
 else{
@@ -199,6 +199,7 @@ $(document).ready(function() {
 </div>
 
 </div>
-<?php if(!$PrintPage){ ?>	
+<?php //if(!$PrintPage){ ?>
+<?php if(empty($PrintPage)){ ?>
 <div style="margin-top: 49px;"></div>
 <?php } ?>

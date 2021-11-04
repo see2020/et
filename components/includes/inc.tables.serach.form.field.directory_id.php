@@ -10,7 +10,7 @@
 		"select_".$TblSetting[$key]['name'],
 //		$cmsPathRelative."/spr_window.php".
 //			"?selected_val=".spr_JsUrlEscape($_GET[$TblSetting[$key]['name']]??"").
-		$cmsPathRelative."/aj.php?af=spr.window".
+		ET_PATH_HTML . "/aj.php?af=spr.window".
 			"&selected_val=".spr_JsUrlEscape($_GET[$TblSetting[$key]['name']]??"").
 			"&field_type=".$TblSetting[$key]['type'].
 			"&tbl_spr=".$TblSetting[$key]['directory_table'].

@@ -4,7 +4,7 @@
 		$TblSetting[$key]['name'],
 		$qChange[$TblSetting[$key]['name']],
 		"select_".$TblSetting[$key]['name'],
-		$cmsPathRelative."/aj.php?af=spr.window"
+		ET_PATH_HTML . "/aj.php?af=spr.window"
 			."&selected_val=".spr_JsUrlEscape($qChange[$TblSetting[$key]['name']])
 			."&field_type=".$TblSetting[$key]['type']
 			."&tbl_spr=".$TblSetting[$key]['directory_table']

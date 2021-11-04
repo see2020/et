@@ -1,7 +1,7 @@
 <?php
 session_start();
-$cmsPathRelative = ".";
-include($cmsPathRelative."/config.php");
+include("cfg.php");
+include(ET_PATH_RELATIVE . DS . "config.php");
 
 if($arrSetting['Access']['UsePassword']){
 	if(usr_Access("admin")){$u_access = true;}
@@ -19,18 +19,18 @@ if($u_access){
 	$sql->sql_connect();
 	
 	$TblList = array();
-	$TblDefTplPath = $arrSetting['Path']['tpl']."/".$arrSetting['Table']['DefaultTpl'];
+	$TblDefTplPath = $arrSetting['Path']['tpl'] . DS . $arrSetting['Table']['DefaultTpl'];
 	$TblSetting["table"]['name'] = "";
 	$TblSetting["table"]['ico'] = ""; //$arrSetting['Path']['ico']."/album.gif";
 	$TblSetting["table"]['description'] = "Редактирование";
-	if(file_exists($TblDefTplPath."/config.top.php")){include($TblDefTplPath."/config.top.php");}
+	if(file_exists($TblDefTplPath . DS . "config.top.php")){include($TblDefTplPath . DS . "config.top.php");}
 	
 	$tmp_style = "style='font-size:14px; text-decoration: none;'";
 	
 	function TestAlias($str = ""){
 		if($str == ""){return($str);}
 		$str = strip_tags($str);
-		$str = preg_replace("/[^a-zA-Z0-9\_\/\.\s]/","",$str);
+		$str = preg_replace("/[^a-zA-Z0-9\_\/\\\.\s]/","",$str);
 		$str = preg_replace("/ {2,}/", " ", $str);
 		$str = trim($str);
 		$str = strtr($str,array(" "=>"-",));
@@ -39,12 +39,12 @@ if($u_access){
 	
 	function GetConfig($arrSetting,$cfg_str){
 		$arrConfig["table"]["description"] = "";
-		$config_file = $arrSetting["Path"]["data"]."/".$cfg_str.".php";
+		$config_file = $arrSetting["Path"]["data"] . DS . $cfg_str.".php";
 		if(file_exists($config_file)){include($config_file);}	
 		return($arrConfig);
 	}
 	
-	$tmpTableDataPath = str_replace($cmsPathRelative."/_data_files/","",$arrSetting['Path']['tbldata']);
+	$tmpTableDataPath = str_replace(ET_PATH_RELATIVE . DS . "_data_files" . DS,"",$arrSetting['Path']['tbldata']);
 	
 	if(!isset($_GET['cfg'])){
 
@@ -54,11 +54,11 @@ if($u_access){
 				foreach($result1 as $key => $t_name){
 					$tName = str_replace($sql->prefix_db, "", $t_name);
 					
-					$arr_tmp_cfg = GetConfig($arrSetting,$tmpTableDataPath."/".$tName."/".$tName);
+					$arr_tmp_cfg = GetConfig($arrSetting,$tmpTableDataPath . DS . $tName . DS . $tName);
 		
 					echo Message("<p>
 						<span ".$tmp_style.">Настройка таблицы: </span>
-						<a href='".$this_url."?cfg=".$tmpTableDataPath."/".$tName."/".$tName."'><strong ".$tmp_style.">[".$tName."]</strong></a>
+						<a href='".$this_url."?cfg=".$tmpTableDataPath . DS . $tName . DS . $tName."'><strong ".$tmp_style.">[".$tName."]</strong></a>
 						".(($arr_tmp_cfg["table"]["description"] != "")?"<br><span class='sektion_description'>".$arr_tmp_cfg["table"]["description"]."</span>":"")."
 					</p>");
 				}		
@@ -105,7 +105,7 @@ if($u_access){
 				//./_data_files/tbldata/tst_maintbl/tst_maintbl.php
 				// \_data_files\tbldata\maintbl\maintbl.php
 				
-				include($arrSetting["Path"]["data"]."/config.php");
+				include($arrSetting["Path"]["data"] . DS . "config.php");
 
 				// шаблон настроек таблицы
 				$arrTableTpl = tblTableTpl();	
@@ -120,19 +120,19 @@ if($u_access){
 					foreach($arrListTable AS $key => $t_name){
 						$tName = str_replace($sql->prefix_db, "", $t_name);
 						$config_file_name = $tName.".php";
-						$config_file_path = $arrSetting['Path']['tbldata']."/".$tName;
+						$config_file_path = $arrSetting['Path']['tbldata'] . DS . $tName;
 						
 						// если неастроек нет, делаем первичное заполнение
 						if(!is_dir($config_file_path)){
 							@mkdir($config_file_path, 0777);
-							$cfg_new = new config($config_file_path."/".$config_file_name);
+							$cfg_new = new config($config_file_path . DS . $config_file_name);
 							$cfg_new->init();
 							unset($cfg_new);
 							
 							// создаем папки для хранения данных настроек
 							$arrTblPath = array("form"=>"tForm","function"=>"tFunction","theme"=>"tThemeField",);
 							foreach($arrTblPath as $keyPath => $valPath){
-								$atp = $config_file_path."/".$valPath;
+								$atp = $config_file_path . DS . $valPath;
 								if(!is_dir($atp)){@mkdir($atp, 0777);}
 							}
 							//unset($arrTblPath);
@@ -160,17 +160,17 @@ if($u_access){
 							$sql->sql_insert("tblmenu",$ArrFVNewTable['ListField'],$ArrFVNewTable['ListValue']);
 							// $IdNewTable = $sql->sql_insertLastId;
 							
-							echo Message("<p ".$tmp_style."><strong ".$tmp_style.">Новый файл настроек:</strong> ".$config_file_path."/".$config_file_name."<p>");
+							echo Message("<p ".$tmp_style."><strong ".$tmp_style.">Новый файл настроек:</strong> ".$config_file_path . DS . $config_file_name."<p>");
 						}
 						else{
 							//копия иземееняемого файла с настройками
-							$FNameArr = $flc->fFileName($config_file_path."/",$config_file_name);
-							if(!copy($config_file_path."/".$config_file_name, $config_file_path."/".$FNameArr['name'])){
-								echo Message("<p ".$tmp_style.">Ошибка копирования файла: ".$config_file_path."/".$config_file_name." >> ".$config_file_path."/".$FNameArr['name']."<p>","error");
-								$ut->utLog(__FILE__ . " - ошибка копирования файла: ".$config_file_path."/".$config_file_name." >> ".$config_file_path."/".$FNameArr['name']."<p>");
+							$FNameArr = $flc->fFileName($config_file_path . DS, $config_file_name);
+							if(!copy($config_file_path . DS . $config_file_name, $config_file_path . DS . $FNameArr['name'])){
+								echo Message("<p ".$tmp_style.">Ошибка копирования файла: ".$config_file_path . DS . $config_file_name." >> ".$config_file_path . DS . $FNameArr['name']."<p>","error");
+								$ut->utLog(__FILE__ . " - ошибка копирования файла: ".$config_file_path . DS . $config_file_name." >> ".$config_file_path . DS . $FNameArr['name']."<p>");
 							}
 							else{
-								echo Message("<p ".$tmp_style.">Выполнено копирование файла настроек: ".$config_file_path."/".$config_file_name." >> ".$config_file_path."/".$FNameArr['name']."<p>");
+								echo Message("<p ".$tmp_style.">Выполнено копирование файла настроек: ".$config_file_path . DS . $config_file_name." >> ".$config_file_path . DS . $FNameArr['name']."<p>");
 							}	
 						}
 
@@ -190,7 +190,7 @@ if($u_access){
 					// проверка ключей настроек если что-то отсутсвует, добавляем
 					foreach($arrListTable AS $key => $t_name){
 						$tName		 = str_replace($sql->prefix_db, "", $t_name);
-						$config_file = $arrSetting['Path']['tbldata']."/".$tName."/".$tName.".php";
+						$config_file = $arrSetting['Path']['tbldata'] . DS . $tName . DS . $tName.".php";
 						
 						$cfg_edit = new config($config_file);
 						$cfg_edit->init();
@@ -348,7 +348,7 @@ if($u_access){
 			
 			if($_GET['action']=="sortcorrection"){
 				
-				include($arrSetting["Path"]["data"]."/config.php");
+				include($arrSetting["Path"]["data"] . DS . "config.php");
 
 				// получаем список всех таблиц
 				if($arrListTable = $sql->sql_ShowTableFromBD()){
@@ -357,17 +357,17 @@ if($u_access){
 					foreach($arrListTable AS $key => $t_name){
 						$tName = str_replace($sql->prefix_db, "", $t_name);
 						$config_file_name = $tName.".php";
-						$config_file_path = $arrSetting['Path']['tbldata']."/".$tName;
+						$config_file_path = $arrSetting['Path']['tbldata'] . DS . $tName;
 						
 						if(is_dir($config_file_path)){
 							//копия иземееняемого файла с настройками
-							$FNameArr = $flc->fFileName($config_file_path."/",$config_file_name);
-							if(!copy($config_file_path."/".$config_file_name, $config_file_path."/".$FNameArr['name'])){
-								echo Message("<p ".$tmp_style.">Ошибка копирования файла: ".$config_file_path."/".$config_file_name." >> ".$config_file_path."/".$FNameArr['name']."<p>","error");
-								$ut->utLog(__FILE__ . " - ошибка копирования файла: ".$config_file_path."/".$config_file_name." >> ".$config_file_path."/".$FNameArr['name']."<p>");
+							$FNameArr = $flc->fFileName($config_file_path . DS,$config_file_name);
+							if(!copy($config_file_path . DS . $config_file_name, $config_file_path . DS . $FNameArr['name'])){
+								echo Message("<p ".$tmp_style.">Ошибка копирования файла: ".$config_file_path . DS . $config_file_name." >> ".$config_file_path . DS . $FNameArr['name']."<p>","error");
+								$ut->utLog(__FILE__ . " - ошибка копирования файла: ".$config_file_path . DS . $config_file_name." >> ".$config_file_path . DS . $FNameArr['name']."<p>");
 							}
 							else{
-								echo Message("<p ".$tmp_style.">Выполнено копирование файла настроек: ".$config_file_path."/".$config_file_name." >> ".$config_file_path."/".$FNameArr['name']."<p>");
+								echo Message("<p ".$tmp_style.">Выполнено копирование файла настроек: ".$config_file_path . DS . $config_file_name." >> ".$config_file_path . DS . $FNameArr['name']."<p>");
 							}	
 						}
 					}
@@ -386,7 +386,7 @@ if($u_access){
 					// проверка ключей настроек если что-то отсутсвует, добавляем
 					foreach($arrListTable AS $key => $t_name){
 						$tName		 = str_replace($sql->prefix_db, "", $t_name);
-						$config_file = $arrSetting['Path']['tbldata']."/".$tName."/".$tName.".php";
+						$config_file = $arrSetting['Path']['tbldata'] . DS . $tName . DS . $tName.".php";
 						
 						$cfg_edit = new config($config_file);
 						$cfg_edit->init();
@@ -440,12 +440,12 @@ if($u_access){
 	}
 	else{
 		
-		include($arrSetting["Path"]["data"]."/lang.php");
+		include($arrSetting["Path"]["data"] . DS . "lang.php");
 		$arrConfigLang = $arrConfig;
 		unset($arrConfig);
 		
 		$cfg_str = TestAlias($_GET["cfg"]);
-		$config_file = $arrSetting["Path"]["data"]."/".$cfg_str.".php";
+		$config_file = $arrSetting["Path"]["data"] . DS . $cfg_str.".php";
 		//echo Message("<p><a href='".$this_url."' ".$tmp_style.">Вернуться к выбору настроек</a> | <strong ".$tmp_style."> Редактирование: [ ".$cfg_str." ]</strong> ".$config_file."</p>");
 		echo Message("<p><strong ".$tmp_style."> Редактирование: [ ".$cfg_str." ]</strong> ".$config_file."</p>");
 		
@@ -594,7 +594,7 @@ if($u_access){
 
 										// АВТОЗАПОЛНЕНИЕ НАСТРОЕК
 										// если было выбрано поле статуса, то преписываем настройки
-										if($key1 == "StatusField" && $arrConfig[$_POST[$cfg_name]]["description"] == ""){
+										if($key1 == "StatusField" && empty($arrConfig[$_POST[$cfg_name]]["description"])){
 											$cfg->set($_POST[$cfg_name], "description", "Ст.");
 											$cfg->set($_POST[$cfg_name], "type", "varbool");
 											$cfg->set($_POST[$cfg_name], "default", "1");
@@ -603,7 +603,7 @@ if($u_access){
 											$cfg->set($_POST[$cfg_name], "image_other", "unchecked.gif");
 										}
 										// задано поле для раздела
-										if($key1 == "directory_type" && $arrConfig[$_POST[$cfg_name]]["description"] == ""){
+										if($key1 == "directory_type" && empty($arrConfig[$_POST[$cfg_name]]["description"])){
 											$cfg->set($_POST[$cfg_name], "description", "Это раздел");
 											$cfg->set($_POST[$cfg_name], "type", "varbool");
 											$cfg->set($_POST[$cfg_name], "default", "0");
@@ -616,14 +616,14 @@ if($u_access){
 										}
 					
 										// задано поле для радительских связей
-										if($key1 == "directory_root" && $arrConfig[$_POST[$cfg_name]]["description"] == ""){
+										if($key1 == "directory_root" && empty($arrConfig[$_POST[$cfg_name]]["description"])){
 											$cfg->set($_POST[$cfg_name], "description", "Раздел");
 											$cfg->set($_POST[$cfg_name], "visible", "0");
 											$cfg->set($_POST[$cfg_name], "forprint", "0");
 											$cfg->set($_POST[$cfg_name], "for_search", "0");
 										}
 										// задано поле PrimaryKey
-										if($key1 == "PrimaryKey" && $arrConfig[$_POST[$cfg_name]]["description"] == ""){
+										if($key1 == "PrimaryKey" && empty($arrConfig[$_POST[$cfg_name]]["description"])){
 											$cfg->set($_POST[$cfg_name], "description", "ID");
 											$cfg->set($_POST[$cfg_name], "visible", "0");
 											$cfg->set($_POST[$cfg_name], "editable", "0");
@@ -674,7 +674,10 @@ if($u_access){
 							}
 							
 							$cfg->upd();
-							Redirect($this_url."?cfg=".$cfg_str."&sk=".$section_key,0);
+							// TODO разобраться или переделать, почему то теряет файл из cfg если раскоментить
+							//Redirect($this_url."?cfg=".$cfg_str."&sk=".$section_key,0);
+							// временно
+							echo Message("<a href='".$this_url."?cfg=".$cfg_str."&sk=".$section_key."'>Обновить</a>");
 						}
 					
 						$listConfig.= "<form method='post' action='".$this_url."?cfg=".$cfg_str."&sk=".$section_key."'>";
@@ -933,7 +936,7 @@ if($u_access){
 		
 
 	}
-	if(file_exists($TblDefTplPath."/config.bottom.php")){include($TblDefTplPath."/config.bottom.php");}
+	if(file_exists($TblDefTplPath . DS . "config.bottom.php")){include($TblDefTplPath . DS . "config.bottom.php");}
 	$sql->sql_close();
 }
 ?>

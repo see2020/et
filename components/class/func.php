@@ -151,7 +151,8 @@
 		$FieldList		 = "";
 		$FieldFormList	 = "";
 		reset($TblSetting["sortfieldform"]);
-		while(list($key,$val) = each($TblSetting["sortfieldform"])){
+//		while(list($key,$val) = each($TblSetting["sortfieldform"])){
+		foreach ($TblSetting["sortfieldform"] as $key=>$val){
 			if($TblSetting[$key]["type"] != "support"){
 				$FieldList.= $TblSetting[$key]["name"].", ";
 				$FieldFormList.= strip_tags(($TblSetting[$key]["description"]!="")?$TblSetting[$key]["description"]:$TblSetting[$key]["name"])."<br>\r\n";
@@ -437,7 +438,8 @@
 
 		reset($tListArr);
 		ksort($tListArr);
-		while(list($key,$val) = each($tListArr)){
+//		while(list($key,$val) = each($tListArr)){
+		foreach ($tListArr as $key=>$val){
 			$tListArrRet[$key] = $val;
 		}
 		return($tListArrRet);

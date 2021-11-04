@@ -1,6 +1,5 @@
 <?php
-	$cmsPathRelative = ".";
-	include($cmsPathRelative."/config.php");
-	Redirect("tables.php?tbl=".$arrSetting['Table']['DefaultTable']);	
-	
-?>
+//	$cmsPathRelative = ".";
+	include("cfg.php");
+	include(ET_PATH_RELATIVE . DS ."config.php");
+	Redirect("tables.php?tbl=".$arrSetting['Table']['DefaultTable']);

@@ -43,7 +43,7 @@
 				11150 => array(
 					"link" => "#",
 					"img" => "",
-					"title" => $arrSetting['Other']['upMenuTypeName']."<img src='".$arrSetting['Path']['ico']."/arrow.gif'>",
+					"title" => $arrSetting['Other']['upMenuTypeName']??""."<img src='".$arrSetting['Path']['ico']."/arrow.gif'>",
 					"attributes" => array("target" => "_blank"),
 					"submenu" => mUpMenuArr($TblList),
 				),
@@ -75,7 +75,7 @@
 		1115 => array(
 			"link" => "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']."&print=1",
 			"img" => "printer.gif",
-			"title" => "Печать текущей таблицы: ".$TblName."",
+			"title" => "Печать текущей таблицы: ".($TblName??"")."",
 			"attributes" => array("target" => "_blank"),
 		),
 		1116 => array("link" => "","img" => "","title" => "",),
@@ -86,9 +86,9 @@
 		),
 		1118 => array("link" => "","img" => "sep.gif","title" => "",),
 		1119 => array(
-			"link" => "".$PageLink."&event=serach".$PageLinkSrch."",
+			"link" => "".$PageLink."&event=serach".($PageLinkSrch??"")."",
 			"img" => "search.gif",
-			"title" => "Поиск по текущей таблице: ".$TblName."",
+			"title" => "Поиск по текущей таблице: ".($TblName??"")."",
 		),
 		
 /*
@@ -112,8 +112,8 @@
 */
 		
 		1120 => array("link" => "","img" => "","title" => "
-		<form method='get'  name='srch_tpl' id='srch_tpl' action='?tbl=".((isset($_GET["tbl"]))?$_GET["tbl"]:$TblName)."&event=serach'>
-		<input type='hidden' name='tbl' id='tbl' value='".((isset($_GET["tbl"]))?$_GET["tbl"]:$TblName)."'>
+		<form method='get'  name='srch_tpl' id='srch_tpl' action='?tbl=".((isset($_GET["tbl"]))?$_GET["tbl"]:($TblName??""))."&event=serach'>
+		<input type='hidden' name='tbl' id='tbl' value='".((isset($_GET["tbl"]))?$_GET["tbl"]:($TblName??""))."'>
 		<input type='hidden' name='srch' id='srch' value='1'>
 		<input type='text' name='allfield' id='allfield' value='".((isset($_GET["allfield"]))?$_GET["allfield"]:"")."' style='border: 1px solid ".((isset($_GET["srch"]))?"red":"#00bfff")."; margin:0px;width: 100px; height:18; font-size:10px;'>
 		</form>

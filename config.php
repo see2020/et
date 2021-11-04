@@ -3,22 +3,27 @@
 	//session_name();
 	//session_start();
 
-	$ver = "1.16";
-	
-	if(!isset($cmsPathRelative)){echo "Relative path error!"; exit;}
-	if($cmsPathRelative == ""){echo "Relative path is null!"; exit;}
-	
-	$PathClass	 = $cmsPathRelative."/components/class";
-	$PathData	 = $cmsPathRelative."/_data_files";
+	$ver = "1.17";
 
-	include($PathData."/config.php");
+	if(!defined('ET_PATH_RELATIVE')){
+		echo "Relative path error!";
+		exit;
+	}
+
+	$PathClass	 = ET_PATH_RELATIVE . DS ."components" . DS . "class";
+	$PathData	 = ET_PATH_RELATIVE . DS ."_data_files";
+
+	include($PathData . DS . "config.php");
 	$arrSetting = $arrConfig;
 	
-	include($PathData."/lang.php");
+	include($PathData . DS . "lang.php");
 	$arrLang = $arrConfig;
 	
 	$arrSetting["Version"]["ver"]	 = $ver;
-	foreach($arrSetting['Path'] as $key => $val){$arrSetting['Path'][$key] = $cmsPathRelative.$val;}
+	foreach($arrSetting['Path'] as $key => $val){
+//		$arrSetting['Path'][$key] = ET_PATH_RELATIVE . $val;
+		$arrSetting['Path'][$key] = ET_PATH_RELATIVE . str_replace('/', DS, $val);
+	}
 	$arrSetting["Path"]["class"]	 = $PathClass;
 
 	if(!is_dir($arrSetting['Path']['log'])){if(!mkdir($arrSetting['Path']['log'], 0777)){echo "<p>Ошибка создания папки ".$arrSetting['Path']['log']."</p>";exit;}}
@@ -29,8 +34,8 @@
 	$arrClassInclude = array("sql.php","ut.php","url.php","text.php","mail.php","sqlparser.php","func.php","func_spr.php","func_user.php","config.class.php","file.php");
 
 	foreach($arrClassInclude as $FNameClass) {
-		if(file_exists($PathClass."/".$FNameClass)){
-			include_once($PathClass."/".$FNameClass);
+		if(file_exists($PathClass . DS .$FNameClass)){
+			include_once($PathClass . DS .$FNameClass);
 		}
 		else{
 			echo "Includes error: ".$FNameClass;
@@ -47,10 +52,10 @@
 	
 	$arrSetting["Other"]["tablesysmenu"] = "tblmenu";
 	
-	if(file_exists($arrSetting['Path']['tpl']."/".$arrSetting['Table']['DefaultTpl']."/func.php")){
-		include_once($arrSetting['Path']['tpl']."/".$arrSetting['Table']['DefaultTpl']."/func.php");
+	if(file_exists($arrSetting['Path']['tpl'] . DS . $arrSetting['Table']['DefaultTpl'] . DS . "func.php")){
+		include_once($arrSetting['Path']['tpl'] . DS . $arrSetting['Table']['DefaultTpl'] . DS . "func.php");
 	}else{
-		echo "Includes error: ".$arrSetting['Table']['DefaultTpl']."/func.php";
+		echo "Includes error: ".$arrSetting['Table']['DefaultTpl'] . DS . "func.php";
 		exit;
 	}	
 

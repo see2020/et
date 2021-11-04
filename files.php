@@ -6,8 +6,8 @@
 // 2014.10.28
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 	session_start();
-	$cmsPathRelative = ".";
-	include($cmsPathRelative."/config.php");
+	include("cfg.php");
+	include(ET_PATH_RELATIVE . DS . "config.php");
 	
 	if(usr_Access("admin")){$u_access = true;}
 	else{
@@ -34,7 +34,7 @@
 	
 	//если не выбрана папка
 	if(isset($_GET['d'])){$var_temp_dir = $_GET['d'];}
-	if($_GET['d'] != ""){$var_temp_dir = $_GET['d'];}
+	if(!empty($_GET['d'])){$var_temp_dir = $_GET['d'];}
 
 	$vtd = "";
 	$vtd_array = array();$vtd1 = $RelPath;$vtd_array = explode("/",$var_temp_dir);
@@ -133,7 +133,7 @@
 		//сначало выводим директории
 		$flc->fListFolders($var_temp_dir,$path_now_http,true);
 		if(isset($flc->fListFolders[0]['file'])){
-			while(list($key,$val) = each($flc->fListFolders)){
+			foreach ($flc->fListFolders as $key=>$val){
 				$fCOBF = $flc->fCountObjectByFolder($val['server']."/".$val['file']);		
 				echo "<tr>";
 				echo "<td>&nbsp;</td>";
@@ -158,7 +158,7 @@
 			$NotShowFileListArray[] = "";
 			$NotShowFileListArray[] = ".";
 			$NotShowFileListArray[] = "..";
-			while(list($key,$val) = each($flc->fListFiles)){
+			foreach($flc->fListFiles as $key=>$val){
 				echo "<tr>";
 				if(!in_array($val['file'],$NotShowFileListArray)){
 					echo "<td align='center'><input type='checkbox' name='CheckFile[]' id='".$val['file']."' value='".$val['server']."/".$val['file']."' onClick=\"bldGetFiles(this.form,'CheckFile[]')\" /></td>";
