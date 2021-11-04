@@ -11,17 +11,25 @@ $tblName = trim($TblSetting['table']['name']);
 $TblSetting['table']['FileStore'] = trim($TblSetting['table']['FileStore']);
 if($TblSetting['table']['FileStore'] == ''){
 	$FilesPath = $arrSetting['Path']['tbldata'] . DS . $tblName;
-	if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);}}
+	if(!newDir($FilesPath)){
+	    $ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);
+	}
 	$FilesPath = $FilesPath . DS . "files";
-	if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);}}
+	if(!newDir($FilesPath)){
+	    $ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);
+	}
 }
 else{
 	$FilesPath = $TblSetting['table']['FileStore'];
 	if(!is_dir($FilesPath)){
 		$FilesPath = $arrSetting['Path']['tbldata'] . DS . $tblName;
-		if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);}}
+		if(!newDir($FilesPath)){
+		    $ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);
+		}
 		$FilesPath = $FilesPath . DS . "files";
-		if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);}}
+		if(!newDir($FilesPath)){
+		    $ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);
+		}
 	}
 }
 
@@ -36,7 +44,8 @@ $arrAction["PanelNum"]      	 = (empty($arrAction["PanelNum"]))?"1":$arrAction["
 if(isset($_POST['AddFile'])){
 	if($_FILES){
 		$dir_name = $arrAction["FilesPath"];
-		if(!is_dir($dir_name)){mkdir($dir_name, 0777);}
+		newDir($dir_name);
+		$txt = new class_txt();
 		foreach ($_FILES as $key => $value) {
 			for($i = 0; $i < count($value['name']);$i++){
 				$string_fname	 = $txt->txtClearStr($txt->txtTranslit(strtolower($value['name'][$i])));

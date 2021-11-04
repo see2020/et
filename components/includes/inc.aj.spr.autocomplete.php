@@ -1,6 +1,7 @@
 <?php
 	//inc.aj.spr.autocomplete.php.php
 	include($arrSetting["Path"]["class"]."/a.charset.php");
+	$url = new class_url();
 	$qSearch	 = $url->uJsUrlDecode($_GET['query']);
 	$qSearch	 = charset_x_win($_GET['query']);
 	$arr_spr_cfg = tblGetConfig($_GET['tbl_spr'],$arrSetting);

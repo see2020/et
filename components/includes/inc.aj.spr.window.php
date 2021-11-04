@@ -14,7 +14,7 @@
 
 	// $_GET['irn'] - имя поля формы для возврата из окошка (если связь по id, то указываем идентификатор)
 	include($arrSetting["Path"]["class"]."/a.charset.php");
-	$txt->txtSpaceRw = true;	
+//	$txt->txtSpaceRw = true;
 
 	$NyroId1 = "";
 	$NyroId2 = "";

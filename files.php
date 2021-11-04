@@ -12,8 +12,8 @@
 	if(usr_Access("admin")){$u_access = true;}
 	else{
 		echo Message("Недостаточно прав на изменение этого раздела", "error");
-		exit;
 		$u_access = false;
+		exit;
 	}
 	
 	$PageLink = "?tbl=".$arrSetting['Table']['DefaultTable'];
@@ -384,7 +384,7 @@
 			if($_GET['a']=='create'){
 				
 				if(isset($_POST['NewFile'])){
-				
+					$txt = new class_txt();
 					$fileName = $txt->txtClearStr($txt->txtTranslit($_POST['f_name']));
 					$fileName = $fileName.".".$txt->txtClearStr($_POST['f_ext']);
 				
@@ -425,7 +425,7 @@
 
 				//сохраняем
 				if(isset($_POST['NewDir'])){
-				
+					$txt = new class_txt();
 					$dName = $txt->txtClearStr($txt->txtTranslit($_POST['d_name']));
 					if(is_dir($_GET['d']."/".$dName)){
 						$FNameArr1 = $flc->fDirName($_GET['d'],$dName);
@@ -433,7 +433,7 @@
 						$dName = $FNameArr1['name'];
 					}
 					echo "<p align='center'>".$_GET['d']."/".$dName."</p>";
-					if(mkdir($_GET['d']."/".$dName, 0777)){
+					if(newDir($_GET['d']."/".$dName)){
 						echo "<p align='center'>Новая папка: ".$dName."</p>";
 						echo "<p align='center'><a href='?d=".$_GET['d']."/".$dName."' title='refresh' style='color:black;' >refresh page</a></p>";
 						$ut->utLog(__FILE__ . " - Новая папка: ".$_GET['d']."/".$dName);
@@ -464,6 +464,7 @@
 						$file_size	 = $_FILES["f_name"]["size"];
 
 						if($_FILES["f_name"]["error"] == 0){
+							$txt = new class_txt();
 							$fileName = $txt->txtClearStr($txt->txtTranslit($file_name));
 							$fileName = strtr($fileName,array(" "=>"_"));
 							if(file_exists($_GET['d']."/".$fileName)){

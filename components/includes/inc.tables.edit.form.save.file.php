@@ -13,20 +13,29 @@
 					$TblSetting["table"]['FileStore'] = trim($TblSetting["table"]['FileStore']);
 					if($TblSetting["table"]['FileStore'] == ""){
 						$FilesPath = $arrSetting['Path']['tbldata']."/".$TblSetting["table"]['name'];
-						if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog("Ошибка создания папки ".$FilesPath." ".__FILE__);}}
+						if(!newDir($FilesPath)){
+							$ut->utLog("Ошибка создания папки ".$FilesPath." ".__FILE__);
+						}
 						$FilesPath = $FilesPath."/files";
-						if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog("Ошибка создания папки ".$FilesPath." ".__FILE__);}}
+						if(!newDir($FilesPath)){
+							$ut->utLog("Ошибка создания папки ".$FilesPath." ".__FILE__);
+						}
 					}
 					else{
 						$FilesPath = $TblSetting["table"]['FileStore'];
 						if(!is_dir($FilesPath)){
 							$FilesPath = $arrSetting['Path']['tbldata']."/".$TblSetting["table"]['name'];
-							if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog("Ошибка создания папки ".$FilesPath." ".__FILE__);}}
+							if(!newDir($FilesPath)){
+								$ut->utLog("Ошибка создания папки ".$FilesPath." ".__FILE__);
+							}
 							$FilesPath = $FilesPath."/files";
-							if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog("Ошибка создания папки ".$FilesPath." ".__FILE__);}}
+							if(!newDir($FilesPath)){
+								$ut->utLog("Ошибка создания папки ".$FilesPath." ".__FILE__);
+							}
 						}
 					}
-					
+
+					$txt = new class_txt();
 					$string_fname = $txt->txtClearStr($txt->txtTranslit(strtolower($file_name)));
 					
 					$FArr = $flc->fFileName($FilesPath,$string_fname);

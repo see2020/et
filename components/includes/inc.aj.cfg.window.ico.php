@@ -5,7 +5,7 @@
 
 	include($arrSetting["Path"]["class"]."/a.charset.php");
 	$sql->sql_connect();
-	$txt->txtSpaceRw = true;	
+//	$txt->txtSpaceRw = true;
 
 	$show_window_content = "";
 	$show_window_content.= spr_WindowSetHead($arrSetting);

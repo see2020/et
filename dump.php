@@ -1,14 +1,14 @@
 <?php
 	session_start();
 	
-	$cmsPathRelative = ".";
-	include($cmsPathRelative."/config.php");
+    include("cfg.php");
+    include(ET_PATH_RELATIVE . DS . "config.php");
 
 	if(usr_Access("admin")){$u_access = true;}
 	else{
 		echo Message("Недостаточно прав на изменение этого раздела", "error");
-		exit;
 		$u_access = false;
+		exit;
 	}
 	
 	$sql->sql_connect();
@@ -17,11 +17,11 @@
 
 	// тема оформления	
 	$TblList = array();
-	$TblDefTplPath = $arrSetting['Path']['tpl']."/".$arrSetting['Table']['DefaultTpl'];
+	$TblDefTplPath = $arrSetting['Path']['tpl'] . DS . $arrSetting['Table']['DefaultTpl'];
 	$TblSetting["table"]['name'] = "";
-	$TblSetting["table"]['ico'] = $arrSetting['Path']['ico']."/mysql_dump.gif";
+	$TblSetting["table"]['ico'] = $arrSetting['Path']['ico'] . DS . "mysql_dump.gif";
 	$TblSetting["table"]['description'] = "Дамп таблиц";
-	if(file_exists($TblDefTplPath."/top.php")){include($TblDefTplPath."/top.php");}
+	if(file_exists($TblDefTplPath . DS . "top.php")){include($TblDefTplPath . DS . "top.php");}
 ?>
 <div class='panel_btn'>
 	<table border='0' cellspacing='0' cellpadding='2'>
@@ -46,16 +46,16 @@
 		//путь к дампу на сервере
 		$PathDump					 = $arrSetting['Path']['dump'];	
 		//файл дампа
-		$PathDumpFile =  $PathDump."/dump_".$ut->utGetDate("Ymd_His").".sql";
+		$PathDumpFile =  $PathDump . DS . "dump_".$ut->utGetDate("Ymd_His").".sql";
 		
 		if(isset($_GET['action'])){
 			if($_GET['action']=="dump_del"){
-				if(file_exists($PathDump."/".$_GET['f_dump'])){
-					$flc->fDelFile($PathDump."/".$_GET['f_dump']);
-					$ut->utLog(__FILE__ . " - dump удален: ".$PathDump."/".$_GET['f_dump']);
+				if(file_exists($PathDump . DS . $_GET['f_dump'])){
+					$flc->fDelFile($PathDump . DS . $_GET['f_dump']);
+					$ut->utLog(__FILE__ . " - dump удален: ".$PathDump . DS . $_GET['f_dump']);
 					Redirect($PageLink,0);
 				}else{
-					echo Message("Файл не найден. ".$PathDump."/".$_GET['f_dump'],"alert");
+					echo Message("Файл не найден. ".$PathDump . DS . $_GET['f_dump'],"alert");
 				}
 			}
 		}
@@ -75,23 +75,24 @@
 				$_POST['query_text'] = strtr($_POST['query_text'],array("\'"=>"'","\r"=>"","\n"=>""));
 				echo "<br>";
 				echo '<b>Обработка дампа из текстового поля</b><br>';
+				$sql_parser = new SQLParser;
 				$arr2 = $sql_parser->getQueries($_POST['query_text']);
 				reset($arr2);
 				$valCounter = 0;
-				while(list($key,$val) = each($arr2)){
+				foreach($arr2 as $key=>$val){
 					echo Message("row: ".$valCounter.". ".$val);
 					$valCounter++;
 					$result2 = $sql->sql_query($val);
 					if($sql->sql_err){
 						echo Message("<b>MYSQL ERROR:</b><br> ".$sql->sql_err,"error");
 					}
-					else{
+//					else{
 						// SHOW TABLES FROM `domen`;
 						// SHOW COLUMNS FROM `dm_dv`;
 						// echo '<pre>';
 						// print_r($result2);
 						// echo '</pre>';
-					}
+//					}
 				}
 				echo '<b>Обработка завершена</b><br>';
 				echo 'Обработано строк: '.$valCounter.'<br>';
@@ -104,7 +105,7 @@
 			echo "<select name='table_list[]' size='15'  multiple='multiple' style='width: 170px;'>";
 			$arr_tbl = array();
 			$result1 = $sql->sql_query("SHOW TABLES FROM `".$arrSetting['MySQL']['database']."`");
-			if ($sql->sql_err){$my->kLog(__FILE__ ." ошибка получения списка таблиц");}
+			if ($sql->sql_err){$ut->utLog(__FILE__ ." ошибка получения списка таблиц");}
 			else{
 				while($table = $sql->sql_array($result1)){
 					echo "<option value='".trim($table['Tables_in_'.$arrSetting['MySQL']['database']])."'>".trim($table['Tables_in_'.$arrSetting['MySQL']['database']])."</option>";
@@ -133,7 +134,9 @@
 				echo "<br>";
 				
 				//папка для сохранения дампа из нее же берется для востановления
-				if(!is_dir($PathDump)){if(!mkdir($PathDump, 0777)){$ut->utLog(__FILE__ . " - Ошибка создания папки ".$PathDump);}}
+				if(!newDir($PathDump)){
+					$ut->utLog(__FILE__ . " - Ошибка создания папки ".$PathDump);
+                }
 
 				// получаем список колонок таблицы
 				function dddGetFieldList($sql,$table){
@@ -141,7 +144,7 @@
 					$arrColumn = $sql->sql_GetFieldFromTable($table);
 					if(is_array($arrColumn)){
 						reset($arrColumn);
-						while(list($key,$val)=each($arrColumn)){
+						foreach($arrColumn as $val){
 							$fld.=",`".$val."`";
 						}
 					}
@@ -192,7 +195,7 @@
 								// получаем данные по колонкам
 								reset($arr_fields);
 								//получаем данные одной записи таблицы в строку
-								while(list($key,$val)=each($arr_fields)){
+								foreach($arr_fields as $val){
 									$data_field.=",'".$query[trim(strtr($val, array("`"=>"")))]."'";
 								}
 								$data_field = strtr(substr($data_field,1), array("\r"=>"","\n"=>""));
@@ -215,7 +218,7 @@
 								// получаем данные по колонкам
 								reset($arr_fields);
 								//получаем данные одной записи таблицы в строку
-								while(list($key,$val)=each($arr_fields)){
+								foreach($arr_fields as $val){
 									$data_field.=",".$val."='".$query[trim(strtr($val, array("`"=>"")))]."'";
 									//получаем значение PrimaryKey-я
 									if(trim(strtr($val, array("`"=>""))) == $p_key){
@@ -284,7 +287,7 @@
 				}
 				else{
 					if($result1 = $sql->sql_ShowTableFromBD()){
-						while(list($t_key,$t_name)=each($result1)){
+						foreach($result1 as $t_key=>$t_name){
 							
 							// получаем список колонок таблицы
 							$fields = dddGetFieldList($sql,$t_name);
@@ -342,7 +345,7 @@
 			}
 			if(isset($_POST['TruncTableYes'])){
 				$arr = explode(",", $_GET['tbl_list']);reset($arr);
-				while(list($key,$val) = each($arr)){
+				foreach($arr as $key=>$val){
 					$val = trim($val);
 					$result = $sql->sql_query("TRUNCATE TABLE `".$val."`");
 					echo Message("TRUNCATE TABLE `".$val."` complete!</a>");
@@ -374,12 +377,12 @@
 			$flc->fListFiles($PathDump,$PageLink,true);
 			$flc->fNotShowFile = 1;
 			if(isset($flc->fListFiles[0]['file'])){
-				while(list($key,$val) = each($flc->fListFiles)){
+				foreach($flc->fListFiles as $key=>$val){
 					$fd_list.= "<tr>";
 					$fd_list.= "<td><a href='".$PageLink."&dump_open=".$val['file']."#' title='Open: ".$val['file']."' style='color:green'>".$val['file']."</a></td>";
 					$fd_list.= "<td>".(($val['size']>1024)?round($val['size']/1024,3)."&nbsp;Mb":$val['size']."&nbsp;Kb")."</td>";
 					$fd_list.= "<td>";
-						if(file_exists("./files.php")){
+						if(file_exists(ET_PATH_RELATIVE . DS . "files.php")){
 							$fd_list.= "<a href='files.php?d=".$PathDump."&f=".$val['file']."&a=edit'><img src='".$arrSetting["Path"]['ico']."/folder-album.gif' title='Файлы' class='img_btn'></a>";
 						}
 					$fd_list.= "</td>";
@@ -399,7 +402,7 @@
 		echo "</tr></table>";
 		echo "</form>";
 		
-	if(file_exists($TblDefTplPath."/bottom.php")){include($TblDefTplPath."/bottom.php");}
+	if(file_exists($TblDefTplPath . DS . "bottom.php")){include($TblDefTplPath . DS . "bottom.php");}
 	$sql->sql_close();
 ?>
 

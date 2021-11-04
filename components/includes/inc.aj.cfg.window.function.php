@@ -10,7 +10,7 @@
 	include(GetIncFile($arrSetting,"inc.tables.config.set.php", ""));
 	
 	$sql->sql_connect();
-	$txt->txtSpaceRw = true;	
+//	$txt->txtSpaceRw = true;
 	
 	$TblPathFunction = $arrSetting["Path"]["tbldata"]."/".$TblName."/tFunction";
 
@@ -113,9 +113,9 @@
 			}
 
 		}
-		if($_GET["event"] == "del_func"){
+//		if($_GET["event"] == "del_func"){
 			
-		}
+//		}
 	}
 	else{
 		
