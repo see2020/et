@@ -13,6 +13,20 @@
 	$PathClass	 = ET_PATH_RELATIVE . DS ."components" . DS . "class";
 	$PathData	 = ET_PATH_RELATIVE . DS ."_data_files";
 
+	$arrConfig = [];
+
+	function newDir($dirName = null){
+		if(empty($dirName)){
+			return false;
+		}
+		if(!is_dir($dirName)){
+			if(!mkdir($dirName, 0777)){
+				return false;
+			}
+		}
+		return true;
+	}
+
 	include($PathData . DS . "config.php");
 	$arrSetting = $arrConfig;
 	
@@ -26,10 +40,16 @@
 	}
 	$arrSetting["Path"]["class"]	 = $PathClass;
 
-	if(!is_dir($arrSetting['Path']['log'])){if(!mkdir($arrSetting['Path']['log'], 0777)){echo "<p>Ошибка создания папки ".$arrSetting['Path']['log']."</p>";exit;}}
-	
+	if(!newDir($arrSetting['Path']['log'])){
+		echo "<p>Ошибка создания папки ".$arrSetting['Path']['log']."</p>";
+	}
+
 	// создаем дополнительные папки
-	foreach($arrSetting['Path'] as $key => $val){if(!is_dir($val)){if(!mkdir($val, 0777)){echo "<p>Ошибка создания папки ".$val."</p>";exit;}}}
+	foreach($arrSetting['Path'] as $key => $val){
+		if(!newDir($val)){
+			echo "<p>Ошибка создания папки ".$val."</p>";
+		}
+	}
 
 	$arrClassInclude = array("sql.php","ut.php","url.php","text.php","mail.php","sqlparser.php","func.php","func_spr.php","func_user.php","config.class.php","file.php");
 
@@ -44,11 +64,11 @@
 	}
 	$sql = new class_sql($arrSetting);
 	$ut	 = new class_ut($arrSetting);
-	$url = new class_url();
-	$txt = new class_txt();
-	$eml = new class_mail($arrSetting);
+//	$url = new class_url();
+//	$txt = new class_txt();
+//	$eml = new class_mail($arrSetting);
 	$flc = new class_file();
-	$sql_parser = new SQLParser;
+//	$sql_parser = new SQLParser;
 	
 	$arrSetting["Other"]["tablesysmenu"] = "tblmenu";
 	
@@ -59,6 +79,6 @@
 		exit;
 	}	
 
-	define("D_NAME",$arrSetting['MySQL']['database'],true);
+	define("D_NAME",$arrSetting['MySQL']['database']);
 
 ?>
