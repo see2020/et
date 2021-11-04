@@ -6,30 +6,32 @@
 // $FilesPath = $FilesPath."/files";
 // if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);}}
 
+$tblName = trim($TblSetting['table']['name']);
+
 $TblSetting['table']['FileStore'] = trim($TblSetting['table']['FileStore']);
 if($TblSetting['table']['FileStore'] == ''){
-	$FilesPath = $arrSetting['Path']['tbldata']."/".$TblSetting["table"]['name'];
+	$FilesPath = $arrSetting['Path']['tbldata'] . DS . $tblName;
 	if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);}}
-	$FilesPath = $FilesPath."/files";
+	$FilesPath = $FilesPath . DS . "files";
 	if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);}}
 }
 else{
 	$FilesPath = $TblSetting['table']['FileStore'];
 	if(!is_dir($FilesPath)){
-		$FilesPath = $arrSetting['Path']['tbldata']."/".$TblSetting["table"]['name'];
+		$FilesPath = $arrSetting['Path']['tbldata'] . DS . $tblName;
 		if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);}}
-		$FilesPath = $FilesPath."/files";
+		$FilesPath = $FilesPath . DS . "files";
 		if(!is_dir($FilesPath)){if(!mkdir($FilesPath, 0777)){$ut->utLog(__FILE__ . " - Ошибка создания папки ".$FilesPath);}}
 	}
 }
 
-$arrActionUT["TabNum"]		 = "1";
-$arrAction["nametable"]	 = "tblfiles";
-$arrAction["namepage"]	 = ($TblSetting["table"]["NameTabFileList"] == "")?"Загрузка файлов":$TblSetting["table"]["NameTabFileList"];
-$arrAction["FilesPath"]	 = $FilesPath;
-$arrAction["thislink"]	 = (!isset($arrAction["thislink"]) || $arrAction["thislink"]=="")?"?tbl=".$TblSetting["table"]['name']."&pagenum=".$pg."&".$TblFieldPrimaryKey."=".$_GET[$TblFieldPrimaryKey]."&event=".$_GET['event']."&panel=".$arrActionUT["TabNum"]:$arrAction["thislink"];
-$arrAction["ShowGoFolderLink"] = (!isset($arrAction["ShowGoFolderLink"]) || $arrAction["ShowGoFolderLink"]=="")?"1":$arrAction["ShowGoFolderLink"];
-$arrAction["PanelNum"]	 = (!isset($arrAction["PanelNum"]) || $arrAction["PanelNum"]=="")?"1":$arrAction["PanelNum"];
+$arrActionUT["TabNum"]	    	 = "1";
+$arrAction["nametable"]     	 = "tblfiles";
+$arrAction["namepage"]      	 = ($TblSetting["table"]["NameTabFileList"] == "")?"Загрузка файлов":$TblSetting["table"]["NameTabFileList"];
+$arrAction["FilesPath"]	         = $FilesPath;
+$arrAction["thislink"]      	 = (empty($arrAction["thislink"]))?"?tbl=".$tblName."&pagenum=".$pg."&".$TblFieldPrimaryKey."=".$_GET[$TblFieldPrimaryKey]."&event=".$_GET['event']."&panel=".$arrActionUT["TabNum"]:$arrAction["thislink"];
+$arrAction["ShowGoFolderLink"]   = (empty($arrAction["ShowGoFolderLink"]))?"1":$arrAction["ShowGoFolderLink"];
+$arrAction["PanelNum"]      	 = (empty($arrAction["PanelNum"]))?"1":$arrAction["PanelNum"];
 
 if(isset($_POST['AddFile'])){
 	if($_FILES){
@@ -43,8 +45,9 @@ if(isset($_POST['AddFile'])){
 				
 				if (@is_uploaded_file($value['tmp_name'][$i])){
 					if(@move_uploaded_file($value['tmp_name'][$i],$dir_name."/".$string_fname)){
-						//$TblName
-						$arr['tbl']			 = trim($TblName);
+						//$tblName
+						$arr['tbl']			 = $tblName;
+						$arr['type_row']	 = 'list';
 						$arr['id_row']		 = $_GET[$TblFieldPrimaryKey];
 						$arr['dt']			 = $ut->utGetTime();
 						$arr['f_name']		 = $string_fname;
@@ -71,18 +74,30 @@ if(isset($_POST['AddFile'])){
 	Redirect($arrAction["thislink"],0);
 }
 
+$mainSqlStr = "
+    SELECT * 
+    FROM ".$sql->prefix_db.$arrAction["nametable"]." 
+    WHERE 
+        type_row='list'
+        AND tbl='".$tblName."' 
+        AND id_row=".$_GET[$TblFieldPrimaryKey]." 
+";
+
 if(isset($_GET["actionFiles"])){
 	if($_GET["actionFiles"] == "st"){
 		
 		$st_field	 = trim($_GET["actionFiles"]);
 		$action_id	 = (int)$_GET["action_id"];
 		$st_other	 = 0;
-		$result = $sql->sql_query("select *	from ".$sql->prefix_db.$arrAction["nametable"]." where tbl='".trim($TblName)."' and id_row='".$_GET[$TblFieldPrimaryKey]."' and id='".$action_id."'");
+		$result = $sql->sql_query("
+            {$mainSqlStr} 
+            and id='".$action_id."'
+        ");
 		if($sql->sql_rows($result)){
 			$query = $sql->sql_array($result);
 			if($query[$st_field] == 0) {$st_other = 1;}else{$st_other = 0;}
 		}
-		$sql->sql_update($arrAction["nametable"],$st_field."='".$st_other."'","tbl='".trim($TblName)."' and id='".$action_id."'");
+		$sql->sql_update($arrAction["nametable"],$st_field."='".$st_other."'","tbl='".$tblName."' and id='".$action_id."'");
 
 		$ut->utLog(__FILE__ . " - Изменен статус ".$st_field."=".$st_other." ID: ".$query['id']."");
 		
@@ -90,11 +105,14 @@ if(isset($_GET["actionFiles"])){
 	}
 	if($_GET["actionFiles"] == "del"){
 		$action_id = (int)$_GET['action_id'];
-		$result = $sql->sql_query("select *	from ".$sql->prefix_db.$arrAction["nametable"]." where tbl='".trim($TblName)."' and id_row='".$_GET[$TblFieldPrimaryKey]."' and id='".$action_id."'");
+		$result = $sql->sql_query("
+            {$mainSqlStr} 
+            and id='".$action_id."'
+        ");
 		if($sql->sql_rows($result)){
 			$query = $sql->sql_array($result);
-			if($sql->sql_delete($arrAction["nametable"],"tbl='".trim($TblName)."' and id='".$action_id."'")){
-				$flc->fDelFile($arrAction["FilesPath"]."/".$query['f_name']);
+			if($sql->sql_delete($arrAction["nametable"],"tbl='".$tblName."' and id='".$action_id."'")){
+				$flc->fDelFile($arrAction["FilesPath"] . DS . $query['f_name']);
 				$ut->utLog(__FILE__ . " - Файл удален FILE: ".$query['f_descr']."; ID_FILE: ".$query['f_descr']."");
 			}else{
 				$ut->utLog(__FILE__ . " - Ошибка удаления файла FILE: ".$query['f_descr']."; ID_FILE: ".$query['f_descr']."");
@@ -103,7 +121,6 @@ if(isset($_GET["actionFiles"])){
 		Redirect($arrAction["thislink"],0);
 	}
 }
-
 ?>
 
 <div id='inputArea'>
@@ -131,7 +148,11 @@ if(isset($_GET["actionFiles"])){
 	<?php
 		$arrImg = array(".jpg",".png",".gif",".bmp",);
 
-		$resultCF = $sql->sql_query("SELECT * FROM ".$sql->prefix_db.$arrAction["nametable"]." WHERE tbl='".trim($TblSetting["table"]['name'])."' AND id_row=".$_GET[$TblFieldPrimaryKey]." ".((usr_Access("admin"))?"":" and st='1' ")." ORDER BY `dt` DESC");
+		$resultCF = $sql->sql_query("
+            {$mainSqlStr}
+            ".((usr_Access("admin"))?"":" and st='1' ")." 
+            ORDER BY `dt` DESC
+        ");
 		if($sql->sql_rows($resultCF)){
 			while($queryCF = $sql->sql_array($resultCF)){
 				$val_loc	 = "";
@@ -143,20 +164,20 @@ if(isset($_GET["actionFiles"])){
 					$delLink = "<a href='".$ActionLNK."&actionFiles=del' ".$val_loc.">Удалить совсем</a>";
 					$delLink.= "<br><a href='".$ActionLNK."&actionFiles=st' ".$val_loc.">Восстановить</a>";
 				}
-				$sz = $flc->fGetFileSize($arrAction["FilesPath"]."/".$queryCF['f_name'],3,"kb");						
+				$sz = $flc->fGetFileSize($arrAction["FilesPath"] . DS . $queryCF['f_name'],3,"kb");
 				echo "<tr>";
 				
 				echo "<td align='center' ".$val_loc.">".$ut->utGetDate("d.m.Y H:i:s",$queryCF['dt'])."</td>";
 				if(in_array($f_info["name_b"],$arrImg)){
 					$img_val = "<div style=' width: 100px; height: 100px; overflow: hidden; text-align: center; margin: 0; padding: 0; '>
-					<a href='".$queryCF['f_path']."/".$queryCF['f_name']."' target='_blank' title='".$queryCF['f_descr']."'><img src='download.php?fl=".$queryCF['id']."'  border='0' style='height:100px;'></a>
+					<a href='".$queryCF['f_path'] . DS . $queryCF['f_name']."' target='_blank' title='".$queryCF['f_descr']."'><img src='download.php?fl=".$queryCF['id']."'  border='0' style='height:100px;'></a>
 					</div>";
 					echo "<td align='center' ".$val_loc.">".$img_val."</td>";
 				}
 				else{
 					echo "<td align='center' ".$val_loc.">".$f_info["name_b"]."</td>";
 				}
-				echo "<td align='left'><a href='download.php?fl=".$queryCF['id']."' >".$queryCF['f_descr']."</a> (".$sz['size']." ".$sz['type'].")</td>";
+				echo "<td align='left'><a href='download.php?fl=".$queryCF['id']."' " . $val_loc . " >".$queryCF['f_descr']."</a> <span " . $val_loc . ">(".$sz['size']." ".$sz['type'].")</span></td>";
 				if(usr_Access("edit")){
 					echo "<td align='center'>".$delLink."</td>";
 				}

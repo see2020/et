@@ -1,17 +1,17 @@
 <?php
 
 	session_start();
-	
-	$cmsPathRelative = ".";
-	include($cmsPathRelative."/config.php");
+
+	include("cfg.php");
+	include(ET_PATH_RELATIVE . DS . "config.php");
 
 	class downloadClass {
 		var $properties = array ('old_name' => "", 'new_name' => "", 'type' => "", 'size' => "", 'resume' => "", 'max_speed' => "" );
 		var $range = 0;
 		
 		function downloadClass($path, $name = "", $resume = 1, $max_speed = 0) {
-			$name = ($name == "") ? substr( strrchr( "/" . $path, "/" ), 1 ) : $name;
-			$name = end( explode( "/", $name ) );
+			$name = ($name == "") ? substr( strrchr( DS . $path, DS ), 1 ) : $name;
+			$name = end( explode( DS, $name ) );
 			
 			$file_size = @filesize( $path );
 			$this->properties = array ('old_name' => $path, 'new_name' => $name, 'type' => "application/force-download", 'size' => $file_size, 'resume' => $resume, 'max_speed' => $max_speed );
@@ -101,7 +101,7 @@
 	}else{die();}
 	$sql->sql_close();
 
-	$real = $queryCF['f_path'].'/'.$queryCF['f_name'];
+	$real = $queryCF['f_path'] . DS . $queryCF['f_name'];
 
 	// echo $real;
 	

@@ -1,19 +1,33 @@
-<?php 
+<?php
+
+    $tblName = trim($TblSetting['table']['name']);
+
 	$arrAction["nametable"]	 = (!isset($arrAction["nametable"]) || $arrAction["nametable"]=="")?"tbllist":$arrAction["nametable"];
 	$arrAction["namepage"]	 = (!isset($arrAction["namepage"]) || $arrAction["namepage"]=="")?"Список":$TblSetting["table"]["NameTabTableList"];
-	$arrAction["thislink"]	 = (!isset($arrAction["thislink"]) || $arrAction["thislink"]=="")?"?tbl=".$TblName."&pagenum=".$pg."&".$TblFieldPrimaryKey."=".$_GET[$TblFieldPrimaryKey]."&event=".$_GET['event']."&panel=2":$arrAction["thislink"];
+	$arrAction["thislink"]	 = (!isset($arrAction["thislink"]) || $arrAction["thislink"]=="")?"?tbl=".$tblName."&pagenum=".$pg."&".$TblFieldPrimaryKey."=".$_GET[$TblFieldPrimaryKey]."&event=".$_GET['event']."&panel=2":$arrAction["thislink"];
 
 	$arrEdit["id"]		 = 0;
 	$arrEdit["descr"]	 = "";
 	
 	if(isset($_POST['CancelEdit'])){Redirect($arrAction["thislink"],0);}
-	
+
+    $mainSqlStr = "
+        SELECT * 
+        FROM ".$sql->prefix_db.$arrAction["nametable"]." 
+        WHERE 
+            type_row='list'
+            AND tbl='".$tblName."' 
+            AND id_row=".$_GET[$TblFieldPrimaryKey]." 
+    ";
+
 	if(isset($_POST['AddList'])){
 		$arrSave["id"]		 = (int)$_POST["id"];
+		$arr['type_row']	 = 'list';
 		$arr['descr']		 = strtr($_POST["descr"],array("\r\n"=>"<br>"));
-		
+
 		if($arrSave["id"] == 0){
-			$arr['tbl']			 = trim($TblName);
+			$arr['tbl']			 = $tblName;
+			$arr['type_row']	 = 'list';
 			$arr['id_row']		 = $_GET[$TblFieldPrimaryKey];
 			$arr['dt']			 = $ut->utGetTime();
 			$arr['ch1']			 = "0";
@@ -30,7 +44,7 @@
 		}
 		else{
 			$ArrFV = $sql->sql_ExpandArr($arr);
-			if(!$sql->sql_update($arrAction["nametable"],$ArrFV['FieldAndValue'],"tbl='".trim($TblName)."' and id='".$arrSave["id"]."'")){
+			if(!$sql->sql_update($arrAction["nametable"],$ArrFV['FieldAndValue'],"type_row = 'list' and tbl='".$tblName."' and id='".$arrSave["id"]."'")){
 				$ut->utLog(__FILE__ ." Не возможно сохранить записью. ID='".$arrSave["id"]);
 			}
 			
@@ -44,12 +58,15 @@
 			$st_field	 = trim($_GET["actionList"]);
 			$action_id	 = (int)$_GET["action_id"];
 			$st_other	 = 0;
-			$result = $sql->sql_query("select *	from ".$sql->prefix_db.$arrAction["nametable"]." WHERE tbl='".trim($TblName)."' and id_row='".$_GET[$TblFieldPrimaryKey]."' and id='".$action_id."'");
+			$result = $sql->sql_query("
+                {$mainSqlStr}
+                and id='".$action_id."'
+            ");
 			if($sql->sql_rows($result)){
 				$query = $sql->sql_array($result);
 				if($query[$st_field] == 0) {$st_other = 1;}else{$st_other = 0;}
 			}
-			$sql->sql_update($arrAction["nametable"],$st_field."='".$st_other."'","tbl='".trim($TblName)."' and id='".$action_id."'");
+			$sql->sql_update($arrAction["nametable"],$st_field."='".$st_other."'","type_row = 'list' and tbl='".$tblName."' and id='".$action_id."'");
 
 			$ut->utLog(__FILE__ . " - Изменен статус ".$st_field."=".$st_other." ID: ".$action_id."");
 			
@@ -58,25 +75,26 @@
 		
 		if($_GET["actionList"] == "del"){
 			$action_id = (int)$_GET['action_id'];
-			$result = $sql->sql_query("select *	from ".$sql->prefix_db.$arrAction["nametable"]." where tbl='".trim($TblName)."' and id_row='".$_GET[$TblFieldPrimaryKey]."' and id='".$action_id."'");
+			$result = $sql->sql_query("
+                {$mainSqlStr} 
+                and id='".$action_id."'
+            ");
 			if($sql->sql_rows($result)){
 				$query = $sql->sql_array($result);
-
-				if($sql->sql_delete($arrAction["nametable"],"tbl='".trim($TblName)."' and id='".$action_id."'")){
+		    		if($sql->sql_delete($arrAction["nametable"],"tbl='".$tblName."' and id='".$action_id."'")){
 				}else{
 					$ut->utLog(__FILE__ . " - Ошибка удаления записи");
 				}
 			}
 			Redirect($arrAction["thislink"],0);
-			
 		}
 		
 		if($_GET["actionList"] == "edit"){
 			$action_id = (int)$_GET['action_id'];
-			$resultCF = $sql->sql_query("SELECT * FROM ".$sql->prefix_db.$arrAction["nametable"]." 
-			WHERE tbl='".trim($TblName)."' 
-			AND id_row=".$_GET[$TblFieldPrimaryKey]." 
-			AND id=".$action_id."");
+			$resultCF = $sql->sql_query("
+                {$mainSqlStr}
+                AND id=".$action_id."
+			");
 			if($sql->sql_rows($resultCF)){
 				$arrEdit = $sql->sql_array($resultCF);
 				$arrEdit['descr']		 = strtr($arrEdit["descr"],array("<br>"=>"\r\n"));
@@ -90,7 +108,6 @@
 <form method="post" enctype="multipart/form-data" action='<?php echo $arrAction["thislink"]; ?>'>
 <h1 style='color:blue;'><?php echo $arrAction["namepage"]; ?></h1>
 
-
 <?php
 	echo frmInput(array("type"=>"hidden", "name"=>"id", "value"=>$arrEdit["id"],));
 	echo frmTextarea("descr", $arrEdit["descr"], array("id"=>"descr","style"=>"width: 90%; height:50px;",));
@@ -102,7 +119,6 @@
 	echo "<br>";
 	echo "<br>";
 ?>
-
 
 </form>
 <?php } ?>
@@ -121,9 +137,11 @@
 		<tbody>
 	<?php
 	
-		$resultCF = $sql->sql_query("SELECT * FROM ".$sql->prefix_db.$arrAction["nametable"]." 
-		WHERE tbl='".trim($TblName)."' AND id_row=".$_GET[$TblFieldPrimaryKey]." ".((usr_Access("admin"))?"":" and st='1' ")."
-		ORDER BY `dt` desc");
+		$resultCF = $sql->sql_query("
+            {$mainSqlStr} 
+            ".((usr_Access("admin"))?"":" and st='1' ")."
+		    ORDER BY `dt` desc
+		");
 		if($sql->sql_rows($resultCF)){
 			while($queryCF = $sql->sql_array($resultCF)){
 
@@ -163,7 +181,6 @@
 		</tbody>
 	</table>
 
-			
 </div>
 
 <?php unset($arrAction); ?>

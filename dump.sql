@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS `tst_tblfiles` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`tbl` varchar(50) NOT NULL DEFAULT '',
+    `type_row` varchar(11) NOT NULL DEFAULT 'list' COMMENT 'хранилище ссылок на файлы. list - список для вкладки, field_once - для поля файла, field_list - для поля списка фалов',
 	`id_row` int(11) NOT NULL DEFAULT '0',
 	`dt` int(20) NOT NULL DEFAULT '0',
 	`f_name` varchar(250) NOT NULL DEFAULT '',
@@ -13,9 +14,11 @@ PRIMARY KEY (`id`)
 CREATE TABLE IF NOT EXISTS `tst_tbllist` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`tbl` varchar(50) NOT NULL DEFAULT '',
+    `type_row` varchar(11) NOT NULL DEFAULT 'list' COMMENT 'хранилище для списков. list - список для вкладки, field_list - для поля списка',
 	`id_row` int(11) NOT NULL DEFAULT '0',
 	`dt` int(20) NOT NULL DEFAULT '0',
 	`descr` text DEFAULT NULL,
+    `lnk` varchar(150) NOT NULL DEFAULT '' COMMENT 'Если используется для поля списка ссылок',
 	`ch1` int(1) NOT NULL DEFAULT '0',
 	`ch2` int(1) NOT NULL DEFAULT '0',
 	`ch3` int(1) NOT NULL DEFAULT '0',

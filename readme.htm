@@ -1,6 +1,12 @@
 <pre>
 
 v1.17 - переработка кода
+	»справление ошибок
+	добавил дополнительные пол€
+		ALTER TABLE `tst_tblfiles` ADD `type_row` VARCHAR(11) NOT NULL DEFAULT 'list' COMMENT 'хранилище ссылок на файлы. list - список дл€ вкладки, field_once - дл€ пол€ файла, field_list - дл€ пол€ списка фалов' AFTER `tbl`;
+		ALTER TABLE `tst_tbllist` ADD `type_row` VARCHAR(11) NOT NULL DEFAULT 'list' COMMENT 'хранилище дл€ списков. list - список дл€ вкладки, field_list - дл€ пол€ списка' AFTER `tbl`;
+		ALTER TABLE `tst_tbllist` ADD `lnk` VARCHAR(150) NOT NULL DEFAULT '' COMMENT '≈сли используетс€ дл€ пол€ списка ссылок' AFTER `descr`;
+
 v1.16 - »зменени€ дл€ версии PHP 7+
 	добавлена настройка дл€ отображени€ названи€ колонки в €чейке
 v1.15 - 

@@ -4,7 +4,7 @@
 	
 	asort($TblSetting["sortfield"]);
 	foreach($TblSetting["sortfield"] as $key=>$val){
-		if($TblSetting[$key]["visible"] == 1){
+		if(!empty($TblSetting[$key]) && $TblSetting[$key]["visible"] == 1){
 			$tpl_name_field	 = "field_head";
 			$tpl_path		 = $TblDefTplPath;
 			//$allSettings["TblPath"]["theme"]
@@ -35,7 +35,7 @@
 	
 	$tblWhereField = "";
 	foreach($TblSetting["sortfield"] as $key=>$val){
-		if($TblSetting[$key]["visible"] == 1 
+		if(!empty($TblSetting[$key]) && $TblSetting[$key]["visible"] == 1
 		&& isset($_GET[$TblSetting[$key]["name"]])
 		&& $TblSetting[$key]['primarytable'] != "" 
 		&& $TblSetting[$key]['primarykey'] != "" 
@@ -59,9 +59,12 @@
 		while($query = $sql->sql_array($result)){
 				$show_field = "";
 				foreach($TblSetting["sortfield"] as $key=>$val){
-					$tmpLnk = $TblSetting[$key]['link'];
-					if($TblSetting[$key]["visible"] == 1){
-						include(GetIncFile($arrSetting,"inc.tables.list.row.php", $TblSetting["table"]["name"]));
+					$tmpLnk = '';
+					if(!empty($TblSetting[$key])){
+						$tmpLnk = $TblSetting[$key]['link'];
+						if($TblSetting[$key]["visible"] == 1){
+							include(GetIncFile($arrSetting,"inc.tables.list.row.php", $TblSetting["table"]["name"]));
+						}
 					}
 				}
 			$show_row.= GetTpl("row", array("field" => $show_field), $TblDefTplPath);
