@@ -123,8 +123,9 @@ if($u_access){
 						$config_file_path = $arrSetting['Path']['tbldata'] . DS . $tName;
 						
 						// если неастроек нет, делаем первичное заполнение
+
 						if(!is_dir($config_file_path)){
-							@mkdir($config_file_path, 0777);
+							newDir($config_file_path);
 							$cfg_new = new config($config_file_path . DS . $config_file_name);
 							$cfg_new->init();
 							unset($cfg_new);
@@ -133,7 +134,7 @@ if($u_access){
 							$arrTblPath = array("form"=>"tForm","function"=>"tFunction","theme"=>"tThemeField",);
 							foreach($arrTblPath as $keyPath => $valPath){
 								$atp = $config_file_path . DS . $valPath;
-								if(!is_dir($atp)){@mkdir($atp, 0777);}
+								newDir($atp);
 							}
 							//unset($arrTblPath);
 							// если таблца новая, добавляем эту таблицу в "меню"
