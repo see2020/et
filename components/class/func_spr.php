@@ -79,7 +79,7 @@
 
 			if($_GET["field_type"] != ""){$field_type = "&field_type=".spr_JsUrlDecode($_GET["field_type"]);}else{$field_type = "";} // - тип поля
 			if($type_list == "window"){
-				$arrNav[$start_id_arr]["link"] = $path_lnk.$field_type."&".$arrTableSpr["table"]['PrimaryKey']."=".$query[$arrTableSpr["table"]['PrimaryKey']]."&".$arrTableSpr["table"]['directory_root']."=".$query[$arrTableSpr["table"]['directory_root']];
+				$arrNav[$start_id_arr]["link"] = $path_lnk.$field_type."&".$arrTableSpr["table"]['PrimaryKey']."=".$query[$arrTableSpr["table"]['PrimaryKey']]."&".$arrTableSpr["table"]['directory_root']."=".$query[$arrTableSpr["table"]['PrimaryKey']];
 			}
 			else{
 				$arrNav[$start_id_arr]["link"] = $path_lnk.$field_type."&".$arrTableSpr["table"]['PrimaryKey']."=".$query[$arrTableSpr["table"]['PrimaryKey']];
@@ -98,8 +98,9 @@
 
 		$return_arr = array();
 
-		if($_GET["field_type"] != ""){$field_type = "&field_type=".spr_JsUrlDecode($_GET["field_type"]);}else{$field_type = "";} // - тип поля
-		
+//		if($_GET["field_type"] != ""){$field_type = "&field_type=".spr_JsUrlDecode($_GET["field_type"]);}else{$field_type = "";} // - тип поля
+		$field_type = "&field_type=directory_id";
+
 		//$id_root = trim($_GET[$arrTableSpr["id"]]);
 		$arrNav	 = spr_navigation_list_dir_id($sql, $arrTableSpr, $path_lnk.$field_type, array(), $start_id_arr, $id_root, $type_list);
 	
@@ -143,7 +144,21 @@
 			return(false);
 		}
 	}
-	
+	// получение кода выбранного элемента, если тип directory_id
+	function spr_GetSelectedCodeById($sql, $arrTableSpr, $selected_val){
+		if(empty($arrTableSpr["table"])){
+			return false;
+		}
+		$query123["id"] = 0;
+		$result123 = $sql->sql_query("SELECT * FROM  ".$sql->prefix_db.$arrTableSpr["table"]['name']." 
+		WHERE `".$arrTableSpr["table"]['PrimaryKey']."`='".$selected_val."'");
+		if($sql->sql_rows($result123)){
+			$query123 = $sql->sql_array($result123);
+			return($query123[$arrTableSpr["table"]["PrimaryKey"]]);
+		}
+			return false;
+	}
+
 /*	// список записей справочника
 	function spr_list($sql, $arrSetting, $arrTableSpr, $path_lnk, $var_where, $allow_selected_category = true){
 		$return_arr = array();
@@ -601,7 +616,7 @@
 	}
 */
 	// для выбора из справчника 
-	function spr_list_dir_id_1($sql, $arrSetting, $arrTableSpr, $path_lnk, $var_where){
+	function spr_list_dir_id($sql, $arrSetting, $arrTableSpr, $path_lnk, $var_where){
 		$return_arr = array();
 		$return_arr["list"]		 = "";
 		$return_arr["WinNMId"]	 = "";
@@ -610,7 +625,13 @@
 			$arrTableSpr["table"]['order'] = $arrTableSpr["table"]["directory_type"]." DESC, ".$arrTableSpr["table"]["directory_name"]." ASC";
 		}
 		
-		$result = $sql->sql_query("SELECT * FROM  ".$sql->prefix_db.$arrTableSpr["table"]['name']." WHERE ".$var_where." AND ".$arrTableSpr["table"]['StatusField']."='1' ORDER BY ".$arrTableSpr["table"]['order']);
+		$result = $sql->sql_query("
+			SELECT * 
+			FROM  ".$sql->prefix_db.$arrTableSpr["table"]['name']." 
+			WHERE 
+				".$var_where." 
+				AND ".$arrTableSpr["table"]['StatusField']."='1' 
+			ORDER BY ".$arrTableSpr["table"]['order']);
 		if($sql->sql_rows($result)){
 			$count_k = 0;
 			while($query = $sql->sql_array($result)){
@@ -632,7 +653,7 @@
 				// если это категория
 				if($query[$arrTableSpr["table"]['directory_type']] == "1"){
 					$return_var.= spr_windowSetTpl("<img src='".$arrSetting['Path']['ico']."/folder.gif'/>", "ico");
-					$return_var.= spr_windowSetTpl("<a href='".$path_lnk."&".$arrTableSpr["table"]['PrimaryKey']."=".$query[$arrTableSpr["table"]['PrimaryKey']]."&".$arrTableSpr["table"]['directory_root']."=".$query[$arrTableSpr["table"]['directory_root']]."' id='".$var_id_for_cat."'>"
+					$return_var.= spr_windowSetTpl("<a href='".$path_lnk."&".$arrTableSpr["table"]['PrimaryKey']."=".$query[$arrTableSpr["table"]['PrimaryKey']]."&".$arrTableSpr["table"]['directory_root']."=".$query[$arrTableSpr["table"]['PrimaryKey']]."' id='".$var_id_for_cat."'>"
 					//.$query[$arrTableSpr["table"]['directory_name']]
 					.(($arrTableSpr[$arrTableSpr["table"]['directory_name']]['type'] == "image")?"<img src='".$query[$arrTableSpr["table"]['directory_name']]."' style='width:50px;height:50px;' >":$query[$arrTableSpr["table"]['directory_name']])
 					.(($arrTableSpr["table"]['directory_name2']!="" && $query[$arrTableSpr["table"]['directory_name2']] != "")?"; ".(($arrTableSpr[$arrTableSpr["table"]['directory_name2']]['type'] == "image")?"<img src='".$query[$arrTableSpr["table"]['directory_name2']]."' style='width:40px;height:40px;'>":$query[$arrTableSpr["table"]['directory_name2']]):"")
@@ -674,6 +695,7 @@
 					."');
 					jsAddField('".$_GET['irn']."_show"."','".$ret_name_show."');$.nmTop().close();\" title='Выбрать'><img src='".$arrSetting['Path']['ico']."/accept.gif'/></a>", "ico","right","center");
 				}
+//				$return_arr["list"].= spr_windowSetTpl(print_r($query,true), "row");
 				$return_arr["list"].= spr_windowSetTpl($return_var, "row");
 			}
 		}

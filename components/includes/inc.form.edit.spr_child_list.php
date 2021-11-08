@@ -51,10 +51,10 @@
 
 	// запрос к таблице
 	// если лимит записей не установлен или это форма для печати то выводим все записи
-
+	$show_row  = "";
 	$result = $sql->sql_query("select * from `".$sql->prefix_db.$TblSetting["table"]['name']."` ".$tblWhere." ".$tblOrder."");
 	if($sql->sql_rows($result)){
-		$show_row  = "";
+
 		$tmpArrSetField = $TblSetting["sortfield"];
 		while($query = $sql->sql_array($result)){
 				$show_field = "";
