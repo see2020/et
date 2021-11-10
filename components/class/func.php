@@ -1,5 +1,9 @@
 <?php
-	
+/**
+ * func.php - дополнительные функции общего назначения
+ *
+ */
+
 	function Redirect($param,$timeout = 0){
 		$param = trim($param);
  		echo "<script language='Javascript'><!--
@@ -151,14 +155,11 @@
 		$FieldList		 = "";
 		$FieldFormList	 = "";
 		reset($TblSetting["sortfieldform"]);
-//		while(list($key,$val) = each($TblSetting["sortfieldform"])){
 		foreach ($TblSetting["sortfieldform"] as $key=>$val){
 			if($TblSetting[$key]["type"] != "support"){
 				$FieldList.= $TblSetting[$key]["name"].", ";
 				$FieldFormList.= strip_tags(($TblSetting[$key]["description"]!="")?$TblSetting[$key]["description"]:$TblSetting[$key]["name"])."<br>\r\n";
 				$FieldFormList.= "<input type='text' name='".$TblSetting[$key]["name"]."' id='".$TblSetting[$key]["name"]."' style='width: 150px;' value='<?php echo \$qChange['".$TblSetting[$key]['name']."']; ?>' /><br>\r\n";
-				// $FieldFormList.= "<input type='text' name='".$TblSetting[$key]["name"]."' id='".$TblSetting[$key]["name"]."' style='width: 150px;' value='' /> - ";
-				// $FieldFormList.= strip_tags(($TblSetting[$key]["description"]!="")?$TblSetting[$key]["description"]:$TblSetting[$key]["name"])." [Field:".$TblSetting[$key]["name"]."] [Value:\$qChange['".$TblSetting[$key]['name']."'] FOR SEARCH FORM [Value:$"."_GET['".$TblSetting[$key]['name']."']<br>\r\n";
 			}
 		}
 		$formContent.= substr($FieldList,0,-2)."\r\n";
@@ -178,9 +179,6 @@
 			$f_path_def	 = $arrSetting['Path']['inc']."/".$f_name;
 			$f_path		 = $arrSetting['Path']['tbldata']."/".$t_name."/tForm/".$f_name;
 		}
-		// echo Message("INCLUDE: f_path_def - ".$f_path_def);
-		// echo Message("INCLUDE: f_path - ".$f_path);
-		
 		if(file_exists($f_path)){return($f_path);}
 		if(file_exists($f_path_def)){return($f_path_def);}
 		else{echo Message("INCLUDE: ".$f_path_def." - error","error");return("");}	
@@ -363,8 +361,8 @@
 		if($type_data ==""){return($return_arr);}
 		$arr = explode(";", $type_data);
 		reset($arr);
-		while(@list($key,$val) = each($arr)){
-			if($val !=""){
+		foreach($arr as $key=>$val){
+			if(!empty($val)){
 				@list($var_val,$var_name) = explode("=", $val);
 				$return_arr[$var_val] = $var_name;
 			}
@@ -395,8 +393,6 @@
 		
 		$tListArr = array();
 		$tListArrRet = array();
-		// reset($TblList);
-		// while(list($key,$val) = each($TblList)){
 		foreach($TblList as $key => $val){
 			if($val['visible']==1){
 
@@ -438,7 +434,6 @@
 
 		reset($tListArr);
 		ksort($tListArr);
-//		while(list($key,$val) = each($tListArr)){
 		foreach ($tListArr as $key=>$val){
 			$tListArrRet[$key] = $val;
 		}
@@ -452,13 +447,13 @@
 		
 		//$_SESSION[D_NAME]['user']['UserType']
 	
-// read=read;new=new;edit=edit;admin=admin;root=root
-// read >> new >> edit >> admin >> root
-// read	 - чтение
-// new	 - чтение, создание
-// edit	 - чтение, создание, редактрование
-// admin - чтение, создание, редактрование, удаление, настройки таблицы
-// root	 - чтение, создание, редактрование, удаление, настройки таблицы, прочие системные настройки
+		// read=read;new=new;edit=edit;admin=admin;root=root
+		// read >> new >> edit >> admin >> root
+		// read	 - чтение
+		// new	 - чтение, создание
+		// edit	 - чтение, создание, редактрование
+		// admin - чтение, создание, редактрование, удаление, настройки таблицы
+		// root	 - чтение, создание, редактрование, удаление, настройки таблицы, прочие системные настройки
 	
 		$arr_access["root"]	 = array("root","admin","edit","new","read");
 		$arr_access["admin"] = array("admin","edit","new","read");
@@ -510,19 +505,7 @@
 				}
 				
 				if($query["u_access"] == ""){$query["u_access"] = "root";}
-				/*
-				if($query['tbl_name'] != ''){
-					//показываем пункт меню с таблицей, только если таблица есть в списке доступных
-					if(usr_Access($query['u_access']) && in_array($query['tbl_name'],$_SESSION[D_NAME]['user']['usrTablesList'])){
-						$tListArr+= $tmpArr;
-					}					
-				}
-				else{
-					if(usr_Access($query['u_access'])){
-						$tListArr+= $tmpArr;
-					}
-				}
-				*/
+
 				// проверяем основное разрешение пользователя для строки меню
 				if(usr_Access($query['u_access'])){
 					$tListArr+= $tmpArr;
@@ -532,9 +515,6 @@
 			
 			reset($tListArr);
 			ksort($tListArr);
-			// while(list($key,$val) = each($tListArr)){
-				// $tListArrRet[$key] = $val;
-			// }
 			foreach($tListArr as $key => $val){
 				$tListArrRet[$key] = $val;
 			}
@@ -746,7 +726,6 @@
 		$return_var.= "<div style=\"clear: both;padding: 0; margin: 0;\"></div>";
 		$return_var.= "</div>";
 		
-		//return(frmInput(SetAttributes($attributes))."<input type=\"image\" src=\"".$Setting["arrSetting"]["Path"]["ico"]."/calendar.gif\" style='margin-bottom:-5px;' />".$tmp_var);
 		return($return_var);
 	}
 
@@ -756,7 +735,6 @@
 		
 		if($AddButtonName == ""){$AddButtonName = "AddButtonName";}
 		$return_var = "";
-		//readonly=\"readonly\"
 		$arr_ro = array();
 		if($ro){$arr_ro = array("readonly"=>"readonly",);}
 		$stl_ro = "";if($ro){$stl_ro = "border: 1px solid #cccccc;";}
@@ -786,8 +764,6 @@
 				$return_field.= frmInput(array("type"=>"file", "name"=>$field_name, "style"=>"width: ".((int)$width_field - 30)."px; ", "value"=>"",) + $attributes);
 			}
 			else{
-				
-				// $return_field.= frmInput(array("type"=>"text", "name"=>$field_name, "style"=>"width: ".((int)$width_field - 57)."px; ", "value"=>$field_value,) + $attributes);
 				$return_field.= frmInput(array("type"=>"hidden", "name"=>$field_name, "style"=>"", "value"=>$field_value,) + $attributes);
 				$arr_f_name = explode("/", $field_value);
 				$return_field.= "<span id='fl_".$field_name."' style='padding-left: 3px;'><a href='".$field_value."' target='_blank'>".$arr_f_name[count($arr_f_name)-1]."</a></span>";
@@ -795,16 +771,12 @@
 				$('#".$field_name."').val('');
 				$('#fl_".$field_name."').html('');
 				", "title"=>"Сбросить"));
-				//$return_field.= frmInput(array("type"=>"button", "style"=>"width: 28px; float:right;", "value"=>"|||", "OnClick"=>"window.open('".$field_value."', 'Скачать')", "title"=>"Скачать", ));
-				//document.getElementById('".$field_name."').value = '';
 			}
 		}
 		else{
-			//$return_field.= frmInput(array("type"=>"text", "name"=>$field_name,"readonly"=>"readonly", "style"=>"width: ".((int)$width_field - 30)."px; ", "value"=>$field_value, ) + $attributes);
 			$return_field.= frmInput(array("type"=>"hidden", "name"=>$field_name, "style"=>"", "value"=>$field_value,) + $attributes);
 			$arr_f_name = explode("/", $field_value);
 			$return_field.= "<span style='padding-left: 3px;'><a href='".$field_value."' target='_blank'>".$arr_f_name[count($arr_f_name)-1]."</a></span>";
-			//$return_field.= frmInput(array("type"=>"button", "style"=>"width: 28px;  float:right;", "value"=>"|||", "OnClick"=>"window.open('".$field_value."', 'Скачать')", "title"=>"Скачать", ));
 		}
 
 		$return_field.= "<div style=\"clear: both;padding: 0; margin: 0;\"></div>";
@@ -901,7 +873,6 @@
 		$return_field.= "<div style=\"clear: both;padding: 0; margin: 0;\"></div>";
 		$return_field.= "</div>";
 		$return_field.= frmInput(array("type"=>"hidden", "name"=>$field_name, "id"=>$field_name, "value"=>$field_value, ));
-		// $return_field.= frmInput(array("type"=>"text", "name"=>$field_name, "id"=>$field_name, "value"=>$field_value,"style"=>"width: 98%; ", ));
 		$return_field.= "<div class=\"sel_field ".$field_name."_lsstr_area\" id=\"".$field_name."_lsstr_area\" style='".$stl_ro."height: ".$height_field."px;width: ".$width_field."px;overflow-y: scroll;margin: 0;padding: 0;'>";
 		if($field_value != ""){
 			$arrListStr = explode($sep_lsstr, $field_value);
@@ -909,7 +880,6 @@
 			if(count($arrListStr) > 0){
 				foreach($arrListStr as $valListStr){
 					$row_id = $field_name."_ls_id_".$cntListStr;
-					//$return_field.= "<span id='".$row_id."'>".$cntListStr.". ".$valListStr;
 					$return_field.= "<span id='".$row_id."'>";
 					$return_field.= "<div style='width: 91%; overflow: hidden; float: left; text-align: left; margin: 3px 0 3px 0; padding: 2px 0 2px 0; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px;	 color: #444444; background: #ffffff; border: 1px solid #bde5f7;'>";
 					$return_field.= $cntListStr.". ";
@@ -934,7 +904,6 @@
 						\" title='Удалить строку'>(X)</a>";
 						$return_field.= "</div>";
 					}
-					//$return_field.= "<br>";
 					$return_field.= "<div style=\"clear: both;padding: 0; margin: 0;\"></div>";
 					$return_field.= "</span>";
 					$cntListStr++;
@@ -942,8 +911,6 @@
 			}
 		}
 		$return_field.= "</div>";
-		
-		//var pairs = stri.split('&');
 		
 		return($return_field);
 	}
@@ -1016,11 +983,8 @@
 		else{
 			//$return_field.= frmInput(array("type"=>"text", "name"=>$field_name,"readonly"=>"readonly", "style"=>"width: ".((int)$width_field - 29)."px;", "value"=>$field_value, ) + $attributes);
 		}
-		
-		
-		
+
 		$return_field.= frmInput(array("type"=>"hidden", "name"=>$field_name, "id"=>$field_name, "value"=>$field_value, ));
-		// $return_field.= frmInput(array("type"=>"text", "name"=>$field_name, "id"=>$field_name, "value"=>$field_value,"style"=>"width: 98%; ", ));
 		$return_field.= "<div class=\"sel_field ".$field_name."_lslnk_area\" id=\"".$field_name."_lslnk_area\" style='".$stl_ro."height: ".$height_field."px;width: ".$width_field."px;overflow-y: scroll;margin: 0;padding: 0;'>";
 		if($field_value != ""){
 			$arrListLink = explode($sep_lslnk, $field_value);
@@ -1030,23 +994,15 @@
 				foreach($arrListLink as $valListLink){
 					$row_id = $field_name."_ls_link_id_".$cntListLink;
 					
-					// $return_field.= "<span id='".$row_id."'>".$cntListLink.". ".$valListLink;
 					$arrListLink1 = explode($sep_lslnk1, $valListLink);
-					//$return_field.= "<span id='".$row_id."'>".$cntListLink.". <a href='".$arrListLink1[0]."' title='".$arrListLink1[0]."' target='_blank'>".$arrListLink1[1]."</a>";
 					$return_field.= "<span id='".$row_id."'>";
 
 
 					$return_field.= "<div style='height: 20px;width: 91%; overflow: hidden; float: left; text-align: left; margin: 3px 0 3px 0; padding: 2px 0 2px 0; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px;color: #444444; background: #ffffff; border: 1px solid #bde5f7;'>";
 					$return_field.= $cntListLink.". ";
-					
-					// if(!isset($arrListLink1[1]) || $arrListLink1[1] == ""){
-						// $return_field.= "<a href='".$arrListLink1[0]."' title='".$arrListLink1[0]."' target='_blank'>".$arrListLink1[0]."</a>";
-					// }
-					// else{
-						$return_field.= "<a href='".$arrListLink1[0]."' title='".$arrListLink1[0]."' target='_blank'>".$arrListLink1[1]."</a>";	
-						//$return_field.= "<br><span style='font-size:10px; margin-top:0; padding-top:0;'>".$arrListLink1[0]."</span>";	
-					//}
-					
+
+					$return_field.= "<a href='".$arrListLink1[0]."' title='".$arrListLink1[0]."' target='_blank'>".$arrListLink1[1]."</a>";
+
 					$return_field.= "</div>";
 					if(!$ro){
 						$return_field.= "<div style='height: 20px;width: 7%; float: left; text-align: center; margin: 3px 0 3px 0; padding: 2px 0 2px 0; border-radius: 4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px;color: #930000; background: #ffffff; border: 1px solid #ff7171; '>";
@@ -1067,7 +1023,6 @@
 						\" title='Удалить строку'>(X)</a>";
 						$return_field.= "</div>";
 					}
-					//$return_field.= "<br>";
 					$return_field.= "<div style=\"clear: both;padding: 0; margin: 0;\"></div>";
 					$return_field.= "</span>";
 					$cntListLink++;
@@ -1075,8 +1030,6 @@
 			}
 		}
 		$return_field.= "</div>";
-		
-		//var pairs = stri.split('&');
 		
 		return($return_field);
 	}

@@ -1,11 +1,15 @@
 <?php
+/**
+ * aj.php - все обращения ajax через этот файл
+ *
+ * aj.php?tbl=incident&id=6683&event=change&field=st&af=varbool
+ * ./aj.php?af=spr.autocomplete&tbl_spr=&field_type=
+ */
 	header('Content-Type: text/html; charset=windows-1251;');
 	include("cfg.php");
 	include(ET_PATH_RELATIVE . DS . "config.php");
 	$sql->sql_connect();
-	//aj.php?tbl=incident&id=6683&event=change&field=st&af=varbool
-	//./aj.php?af=spr.autocomplete&tbl_spr=&field_type=
-	
+
 	$TblNameDefault	 = (!isset($arrSetting['Table']['DefaultTable']) || $arrSetting['Table']['DefaultTable'] == "")?"":$arrSetting['Table']['DefaultTable'];
 	$TblName		 = (isset($_GET['tbl']))?trim($_GET['tbl']):$TblNameDefault;
 	$PageLink		 = "";

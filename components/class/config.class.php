@@ -31,9 +31,9 @@
 				fflush($fp);
 				flock($fp,LOCK_UN);
 				fclose($fp);	
-				return(TRUE);
+				return true;
 			}else{
-				return(FALSE);
+				return false;
 			}
 		}
 		private function createContent(){
@@ -102,16 +102,16 @@
 		}
 
 		public function ElementExist($section = "", $key = ""){
-			if($section == ""){return(FALSE);}
-			elseif($section == "" && $key == ""){return(FALSE);}
+			if($section == ""){return false;}
+			elseif($section == "" && $key == ""){return false;}
 			else{
 				if($section != "" && $key == ""){
-					if(isset($this->cfgArray[$section])){return(TRUE);}else{return(FALSE);}
+					if(isset($this->cfgArray[$section])){return true;}else{return false;}
 				}
 				elseif($section != "" && $key != ""){
-					if(isset($this->cfgArray[$section][$key])){return(TRUE);}else{return(FALSE);}
+					if(isset($this->cfgArray[$section][$key])){return true;}else{return false;}
 				}
-				else{return(FALSE);}
+				else{return false;}
 			}
 		}
 		

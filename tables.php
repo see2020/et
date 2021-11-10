@@ -1,4 +1,8 @@
 <?php
+/**
+ * tables.php - основной файл вывода данных из таблиц
+ * здесь происходит подключение настроек полей для форм и списка
+ */
 	session_start();
 
 	include("cfg.php");
@@ -42,20 +46,12 @@
 	}
 	
 	if($arrSetting['Access']['UsePassword']){
-		//if(!usr_AccessTable($TblSetting["table"]["name"],$_SESSION[D_NAME]['user']['usrtblAccess'][$TblSetting["table"]["name"])){
 		if(!usr_AccessTable($TblSetting["table"]["name"])){
 			echo Message("Недостаточно прав на доступ к разделу. error 2<br><a href='./quit.php'>Выход</a> | <a href='./tables.php'>На главную</a>", "error");
 			$ut->utLog("Недостаточно прав на доступ к разделу. низкий уровень доступа. usr_AccessTable(".$TblSetting["table"]["name"]."), _SESSION[user]".ParseArrForLog($_SESSION[D_NAME]['user']).__FILE__);
 			exit;
 		}
 	}
-	
-	/* $u_access = true;
-	// доступность проверяем только по доступу к таблице
-	// если у пользователя к данной таблице есть определнный доступ "new", "read", "edit", ...
-	if(usr_AccessTable($TblSetting["table"]["name"],"edit")){$u_access = true;}
-	//if(usr_Access("admin")){$u_access = true;}
-	else{$u_access = false;} */
 	
 	include(GetIncFile($arrSetting,"inc.tables.serach.link.php", $TblSetting["table"]["name"]));
 	

@@ -1,5 +1,7 @@
 <?php
-	//inc.aj.spr.autocomplete.php.php
+/**
+ * inc.aj.spr.autocomplete.php.php - автопоиск из таблиц с типом справочник при вводе в формах
+ */
 	include($arrSetting["Path"]["class"]."/a.charset.php");
 	$url = new class_url();
 	$qSearch	 = $url->uJsUrlDecode($_GET['query']);
@@ -27,7 +29,6 @@
 		$wdne = "AND (`".$arr_spr_cfg["table"]["directory_name_edit"]."` LIKE '%".$qSearch."%' ".$wdne.")";	
 	}
 	
-	//$result = $sql->sql_query("SELECT * FROM  ".$sql->prefix_db.$_GET["tbl_spr"]." WHERE ".$arr_spr_cfg["table"]["StatusField"]."='1' AND `".$arr_spr_cfg["table"]["directory_name"]."` LIKE '%".$qSearch."%' ORDER BY ".$arr_spr_cfg["table"]["directory_name"]." ASC");
 	$result = $sql->sql_query("SELECT * FROM  ".$sql->prefix_db.$_GET["tbl_spr"]." WHERE ".$arr_spr_cfg["table"]["StatusField"]."='1' ".$wdne." ORDER BY ".$arr_spr_cfg["table"]["directory_name_edit"]." ASC");
 	if($sql->sql_rows($result)){
 		while($query = $sql->sql_array($result)){
@@ -35,15 +36,12 @@
 		
 			if($_GET['field_type'] == "directory_id"){
 				if($arr_spr_cfg["table"]["directory_UseFullPath"] != 0){
-					//$query[$arr_spr_cfg["table"]["directory_name"]] = spr_get_element_nav($sql,$arr_spr_cfg, $query[$arr_spr_cfg["table"]["PrimaryKey"]]);
 					$query[$arr_spr_cfg["table"]["directory_name_edit"]] = spr_get_element_nav_for_edit($sql,$arr_spr_cfg, $query[$arr_spr_cfg["table"]["PrimaryKey"]]);
 				}
 				else{
-					//$query[$arr_spr_cfg["table"]["directory_name"]] = spr_get_element_nav($sql,$arr_spr_cfg, $query[$arr_spr_cfg["table"]["PrimaryKey"]]);
 					$query[$arr_spr_cfg["table"]["directory_name_edit"]] = spr_get_element_for_edit($sql,$arr_spr_cfg, $query[$arr_spr_cfg["table"]["PrimaryKey"]]);
 				}
 			}
-			//$query[$arr_spr_cfg["table"]["directory_name"]] = str_replace("&quot;", '\"', $query[$arr_spr_cfg["table"]["directory_name"]]);
 			$query[$arr_spr_cfg["table"]["directory_name_edit"]] = str_replace("&quot;", '\"', $query[$arr_spr_cfg["table"]["directory_name_edit"]]);
 
 			$json_tmp = "";

@@ -20,9 +20,9 @@ class class_file{
 			fflush($fp);//очищение файлового буфера и запись в файл
 			flock($fp,LOCK_UN);//снятие блокировки
 			fclose($fp);	
-			return(true);
+			return true;
 		}else{
-			return(false);
+			return false;
 		}
 	}
 
@@ -37,9 +37,9 @@ class class_file{
 			fflush($fp);
 			flock($fp,LOCK_UN);
 			fclose($fp);
-			return(true);
+			return true;
 		}else{
-			return(false);
+			return false;
 		}
 	}
 
@@ -74,8 +74,8 @@ class class_file{
 	function fDelFile($f_name){
 		if(file_exists($f_name)){
 			@chmod($f_name, 0777);  //пытаемся установить полные права доступа на файл перед удалением
-			if(!@unlink($f_name)){return(false);}else {return(true);}
-		}else{return(true);}
+			if(!@unlink($f_name)){return false;}else {return true;}
+		}else{return true;}
 	}
 	
 	// функция удаления пустой директории
@@ -83,8 +83,8 @@ class class_file{
 	function fDelDir($f_name){
 		if(is_dir($f_name)){
 			@chmod($f_name, 0777);  //пытемся установить полные права доступа на файл перед удалением
-			if(!rmdir($f_name)){return(false);}else{return(true);}
-		}else{return(true);}
+			if(!rmdir($f_name)){return false;}else{return true;}
+		}else{return true;}
 	}
 	
 	// Удаляем все дерево в заданой папке
@@ -189,13 +189,6 @@ class class_file{
 				$fSize = filesize($f_path); // получает размер до 2х Гб
 			}
 			
-// exec('dir "'.str_replace('/','\\',$fname).'"',$r);
-// $r = implode("\r\n",$r);
-// $r = str_replace("\xFF",' ',$r);
-// preg_match('/[\d]{2,2}\.[\d]{2,2}\.[\d]{2,4}[\s]+[\d]{2,2}\:[\d]{2,2}[\s]+([\d\s]+)/im',$r,$m);
-// if (!isset($m[1])) return false;
-// $size = str_replace(' ','',$m[1]);
-			
 			$accuracy = (int)$accuracy;
 			$type = strtolower($type);
 			if($type == "kb"){
@@ -263,8 +256,8 @@ class class_file{
 					$this->fFolderListFiles($var_temp_dir."/".$filename0,$var_temp_dir_http."/".$filename0);//выводим подпапки
 				}
 			}		
-		}else{return(false);}
-		return(true);
+		}else{return false;}
+		return true;
 	}
 	
 	//выводим все файлы в директории и дочерних поддиректориях. возвращает массив fListFiles[индекс элемента][название парметра]= путь или имя файла
@@ -302,8 +295,8 @@ class class_file{
 				asort($this->fListFiles);
 				reset($this->fListFiles);
 			}
-		}else{return(false);}
-		return(true);
+		}else{return false;}
+		return true;
 	}	
 
 	//Получаем под директории
@@ -334,8 +327,8 @@ class class_file{
 					$this->fListSubFolders($var_temp_dir."/".$filename0,$var_temp_dir_http."/".$filename0);//выводим подпапки
 				}
 			}		
-		}else{return(false);}
-		return(true);
+		}else{return false;}
+		return true;
 	}	
 	//выводим все поддиректороии в заднной
 	// $OneLevel если поставить значение true, то выводит только первый уровень вложенности
@@ -369,8 +362,8 @@ class class_file{
 				asort($this->fListFolders);
 				reset($this->fListFolders);
 			}
-		}else{return(false);}
-		return(true);
+		}else{return false;}
+		return true;
 	}	
 
 	//считаем сколько папок и файлов в директории
@@ -465,9 +458,7 @@ class class_file{
 					$this->fTreeShow.= " [ ".(($fsize['size']>1024)?round($fsize['size']/1024,3)."&nbsp;Mb":$fsize['size']."&nbsp;Kb")." ] ";
 					$this->fTreeShow.= " [ ".date("Y-m-d H:i:s",filemtime($var_temp_dir."/".$filename0))." ]";
 					$this->fTreeShow.= "</span>";
-					//$this->fTreeShow.= "</span>";
 					$this->fTreeShow.= "<br>";
-					//$this->fTreeShow.= "<br>";
 				}
 			}
 			$this->fTree($var_temp_dir);
@@ -641,14 +632,14 @@ class class_file{
 			}
 			// Закрываем файл
 			fclose($f);
-			return(true);
+			return true;
 		} 
 		else {
 			header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found');
 			header('Status: 404 Not Found');
-			return(false);
+			return false;
 		}
-		return(false);
+		return false;
 	}
 	
 
@@ -705,8 +696,8 @@ class class_ini{
 	function fINIInitArray(){
 		if(file_exists($this->fINIFileName) && is_readable($this->fINIFileName)){
 			$this->fINIArray = parse_ini_file($this->fINIFileName, true);
-			return(true);
-		}else{return(false);}
+			return true;
+		}else{return false;}
 	}
 	// считываем настройки из файла
 	function fINIRead($section, $key, $def = ''){
@@ -777,158 +768,12 @@ class class_ini{
 			fflush($fp);//очищение файлового буфера и запись в файл
 			flock($fp,LOCK_UN);//снятие блокировки
 			fclose($fp);	
-			return(true);
+			return true;
 		}else{
-			return(false);
+			return false;
 		}
 	}
 
 }//class_ini
-
-
-// class Class1
-// {
-	// static private $instance = null;
-	// private $var1 = 'f kdh df,ghkdf.kh d.fgh';
-
-	// static public function getInstance()
-	// {
-		// if (self::$instance == null) 
-		// {
-			// self::$instance = new Class1();
-		// }
-		// return self::$instance;
-	// }
-	// public function view1()
-	// {
-		// echo $this->var1;
-	// }
-// }
-
-// class Class2
-// {
-	// public function view2()
-	// {
-		// Class1::getInstance()->view1();
-	// }
-// }
-
-// Вот небольшой PHP-код, позволяющий шифровать данные алгоритмом XXTEA:
-
-// /* XXTEA encryption arithmetic library.
-// *
-// * Copyright (C) 2006 Ma Bingyao <andot@ujn.edu.cn>
-// * Version:      1.5
-// * LastModified: Dec 5, 2006
-// * This library is free.  You can redistribute it and/or modify it.
-// */
-
-// function long2str($v, $w) {
-    // $len = count($v);
-    // $n = ($len - 1) << 2;
-    // if ($w) {
-        // $m = $v[$len - 1];
-        // if (($m < $n - 3) || ($m > $n)) return false;
-        // $n = $m;
-    // }
-    // $s = array();
-    // for ($i = 0; $i < $len; $i++) {
-        // $s[$i] = pack("V", $v[$i]);
-    // }
-    // if ($w) {
-        // return substr(join('', $s), 0, $n);
-    // } else {
-        // return join('', $s);
-    // }
-// }
-
-// function str2long($s, $w) {
-    // $v = unpack("V*", $s. str_repeat("\0", (4 - strlen($s) % 4) & 3));
-    // $v = array_values($v);
-    // if ($w) {
-        // $v[count($v)] = strlen($s);
-    // }
-    // return $v;
-// }
-
-// function int32($n) {
-    // while ($n >= 2147483648) $n -= 4294967296;
-    // while ($n <= -2147483649) $n += 4294967296;
-    // return (int)$n;
-// }
-
-// function xxtea_encrypt($str, $key) {
-    // if ($str == "") {
-        // return "";
-    // }
-    // $v = str2long($str, true);
-    // $k = str2long($key, false);
-    // if (count($k) < 4) {
-        // for ($i = count($k); $i < 4; $i++) {
-            // $k[$i] = 0;
-        // }
-    // }
-    // $n = count($v) - 1;
-
-    // $z = $v[$n];
-    // $y = $v[0];
-    // $delta = 0x9E3779B9;
-    // $q = floor(6 + 52 / ($n + 1));
-    // $sum = 0;
-    // while (0 < $q--) {
-        // $sum = int32($sum + $delta);
-        // $e = $sum >> 2 & 3;
-        // for ($p = 0; $p < $n; $p++) {
-            // $y = $v[$p + 1];
-            // $mx = int32((($z >> 5 & 0x07ffffff) ^ $y << 2) + (($y >> 3 & 0x1fffffff) ^ $z << 4)) ^ int32(($sum ^ $y) + ($k[$p & 3 ^ $e] ^ $z));
-            // $z = $v[$p] = int32($v[$p] + $mx);
-        // }
-        // $y = $v[0];
-        // $mx = int32((($z >> 5 & 0x07ffffff) ^ $y << 2) + (($y >> 3 & 0x1fffffff) ^ $z << 4)) ^ int32(($sum ^ $y) + ($k[$p & 3 ^ $e] ^ $z));
-        // $z = $v[$n] = int32($v[$n] + $mx);
-    // }
-    // return long2str($v, false);
-// }
-
-// function xxtea_decrypt($str, $key) {
-    // if ($str == "") {
-        // return "";
-    // }
-    // $v = str2long($str, false);
-    // $k = str2long($key, false);
-    // if (count($k) < 4) {
-        // for ($i = count($k); $i < 4; $i++) {
-            // $k[$i] = 0;
-        // }
-    // }
-    // $n = count($v) - 1;
-
-    // $z = $v[$n];
-    // $y = $v[0];
-    // $delta = 0x9E3779B9;
-    // $q = floor(6 + 52 / ($n + 1));
-    // $sum = int32($q * $delta);
-    // while ($sum != 0) {
-        // $e = $sum >> 2 & 3;
-        // for ($p = $n; $p > 0; $p--) {
-            // $z = $v[$p - 1];
-            // $mx = int32((($z >> 5 & 0x07ffffff) ^ $y << 2) + (($y >> 3 & 0x1fffffff) ^ $z << 4)) ^ int32(($sum ^ $y) + ($k[$p & 3 ^ $e] ^ $z));
-            // $y = $v[$p] = int32($v[$p] - $mx);
-        // }
-        // $z = $v[$n];
-        // $mx = int32((($z >> 5 & 0x07ffffff) ^ $y << 2) + (($y >> 3 & 0x1fffffff) ^ $z << 4)) ^ int32(($sum ^ $y) + ($k[$p & 3 ^ $e] ^ $z));
-        // $y = $v[0] = int32($v[0] - $mx);
-        // $sum = int32($sum - $delta);
-    // }
-    // return long2str($v, true);
-// }
-
-// Пример шифрования/дешифрования
-// В представленном коде мы видим, что у нас есть в распоряжении две функции: xxtea_encrypt и xxtea_decrypt. Остальные функции носят вспомогательный характер. Конечно, можно было бы эту реализацию вынести в отдельный класс, но оставим все как есть.
-// Пробуем зашифровать и сразу расшифровать текстовую строку:
-// require_once 'xxtea.inc.php';
-// $cipher = xxtea_encrypt('My test string', 'My test password');
-// echo xxtea_decrypt($cipher, 'My test password');
-// При выводе получаем: My test string
 
 ?>

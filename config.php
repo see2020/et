@@ -1,4 +1,7 @@
 <?php
+/**
+ * config.php - все настройки начинаются здесь
+ */
 	header('Content-Type: text/html; charset=windows-1251');
 	//session_name();
 	//session_start();
@@ -51,7 +54,7 @@
 		}
 	}
 
-	$arrClassInclude = array("sql.php","ut.php","url.php","text.php","mail.php","sqlparser.php","func.php","func_spr.php","func_user.php","config.class.php","file.php");
+	$arrClassInclude = array("sql.php","ut.php","url.php","text.php","sqlparser.php","func.php","func_spr.php","func_user.php","config.class.php","file.php");
 
 	foreach($arrClassInclude as $FNameClass) {
 		if(file_exists($PathClass . DS .$FNameClass)){
@@ -66,7 +69,6 @@
 	$ut	 = new class_ut($arrSetting);
 //	$url = new class_url();
 //	$txt = new class_txt();
-//	$eml = new class_mail($arrSetting);
 	$flc = new class_file();
 //	$sql_parser = new SQLParser;
 	

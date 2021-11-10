@@ -71,12 +71,6 @@
 	);
 	if(usr_Access("admin")){
 		$tmpArr+= array(
-			// 1119 => array("link" => "","img" => "","title" => "",),
-			// 1120 => array(
-				// "link" => "?tbl=".$TblName."&event=tblconfig",
-				// "img" => "cog.gif",
-				// "title" => "Íàñòğîéêè òåêóùåé òàáëèöû: ".$TblName,
-			// ),
 			1119111 => array("link" => "","img" => "","title" => "",),
 			1120111 => array(
 				"link" => "config_edit.php",
@@ -91,33 +85,7 @@
 			),
 		);
 	}
-/*
-	if(usr_Access("root")){
-		$tmpArr+= array(
-			1121321 => array("link" => "","img" => "","title" => "",),
-			1122 => array(
-				"link" => "?tbl=".$TblName."&event=iniconfig&ini_file=".$arrSetting['Path']['tbldata']."/tList.ini",
-				"img" => "",
-				"title" => "table_list.ini",
-				"width" => false,
-			),
-			1123 => array("link" => "","img" => "","title" => "",),
-			1124 => array(
-				"link" => "?tbl=".$TblName."&event=iniconfig&ini_file=".$arrSetting['Path']['data']."/config.ini",
-				"img" => "",
-				"title" => "config.ini",
-				"width" => false,
-			),
-			1125 => array("link" => "","img" => "","title" => "",),
-			1126 => array(
-				"link" => "?tbl=".$TblName."&event=iniconfig&ini_file=".$arrSetting['Path']['data']."/lang.ini",
-				"img" => "",
-				"title" => "lang.ini",
-				"width" => false,
-			),
-		);
-	}
-*/
+
 	$tmpArr+= array(	
 		1127 => array("link" => "","img" => "","title" => "",),
 		1128 => array(

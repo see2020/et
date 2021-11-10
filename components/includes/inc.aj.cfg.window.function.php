@@ -1,5 +1,7 @@
 <?php
-	//inc.aj.cfg.window.function.php
+/**
+ * inc.aj.cfg.window.function.php - окно выбора функций в настройках
+ */
 	
 	$path_lnk = "aj.php?af=cfg.window.function".((isset($_GET["tbl"]))?"&tbl=".$_GET['tbl']:"").((isset($_GET["ret_field"]))?"&ret_field=".$_GET['ret_field']:"");
 
@@ -10,8 +12,7 @@
 	include(GetIncFile($arrSetting,"inc.tables.config.set.php", ""));
 	
 	$sql->sql_connect();
-//	$txt->txtSpaceRw = true;
-	
+
 	$TblPathFunction = $arrSetting["Path"]["tbldata"]."/".$TblName."/tFunction";
 
 	$nyroModal1	 = "";
@@ -56,7 +57,6 @@
 				
 				if($_GET["f"] == ""){
 					$f_name	 = $TblSetting["table"]["name"]."_".trim($_GET["ret_field"]).".php";
-					//$query[$TblSetting[$key]['name']])			
 					$NewFuncCont = "";
 					$NewFuncCont.= "<"."?php\r\n";
 					$NewFuncCont.= "	// ".$ut->utGetDate("Y-m-d")."\r\n";
@@ -100,8 +100,7 @@
 					$f_name = $_GET["f"];
 					$f_con = $flc->fGetContent($TblPathFunction."/".$_GET['f']);
 				}
-				
-		
+
 				$show_window_content.= "<form method='post' action='".$path_lnk."&event=add_func&f=".$f_name."' id='form_edit_window' style='padding: 0; margin: 0;'>";
 				
 				$show_window_content.= "Название:<br><input type='text' name='f_name' id='f_name' style='width: 100%; ' value='".$f_name."' /><br>";
@@ -113,14 +112,8 @@
 			}
 
 		}
-//		if($_GET["event"] == "del_func"){
-			
-//		}
 	}
 	else{
-		
-		
-	
 
 		$flc->fListFiles($TblPathFunction,"",true);
 		$tFPath = $flc->fListFiles;

@@ -1,5 +1,7 @@
 <?php
-	//inc.aj.f_del.php
+/**
+ * inc.aj.f_del.php - удаление записи в списке
+ */
 
 	// доступность проверяем только по доступу к таблице
 	// если у пользователя к данной таблице есть определнный доступ "new", "read", "edit", ...
@@ -21,7 +23,6 @@
 		if(file_exists($func_file) && is_file($func_file)){include($func_file);}$func_file = "";
 		
 		// удаляем прикрепленные файлы
-		//asort($TblSetting["sortfieldform"]);
 		foreach($TblSetting["sortfieldform"] as $key => $val){
 			if($TblSetting[$key]['type']=='file' || $TblSetting[$key]['type']=='image'){
 				
@@ -49,9 +50,6 @@
 			}
 			else{
 				$tmpName = "deleted";
-				// if($TblSetting["f_del"]['link_image']=="1" && trim($TblSetting["f_del"]['image_other']) != ""){
-					// $tmpName = "<img src=".$arrSetting['Path']['ico']."/".$TblSetting["f_del"]['image_other'].">";
-				// }
 				echo $tmpName;
 			}
 		}
@@ -60,8 +58,5 @@
 			$func_file = $arrSetting["Path"]["tbldata"]."/".$TblSetting["table"]["name"]."/tFunction/".$TblSetting["table"]["AfterDelRow"];
 			if(file_exists($func_file) && is_file($func_file)){include($func_file);}$func_file = "";
 		}
-
-
 	}
-	
 ?>

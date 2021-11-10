@@ -15,7 +15,6 @@
 	
 	if(isset($_POST['AddUserTable'])){
 		$arrSave["id"]		 = (int)$_POST["id"];
-		//$arr['description']		 = strtr($_POST["description"],array("\r\n"=>"<br>"));
 		$arr['table_name']		 = $_POST["table_name"];
 		$arr['user_type']		 = $_POST["user_type"];
 		
@@ -76,13 +75,11 @@
 		if($_GET["actionUserTbl"] == "autoaddtables"){
 			$action_id = (int)$_GET['action_id'];
 			$arrAuto['description']		 = "";
-			//$arrAuto['table_name']	 = $_POST["table_name"];
 			$arrAuto['user_type']	 = $qChange["user_type"];
 			$arrAuto['id_user']		 = $_GET[$TblFieldPrimaryKey];
 			$arrAuto['st']			 = "1";
 			
 			if($result1 = $sql->sql_ShowTableFromBD()){
-				//ksort($TblList);
 				foreach($result1 as $key => $t_name){
 					$tName = str_replace($sql->prefix_db, "", $t_name);
 					$arrAuto['table_name'] = $tName;
@@ -141,7 +138,6 @@
 			AND id=".$action_id."");
 			if($sql->sql_rows($resultCF)){
 				$arrEdit = $sql->sql_array($resultCF);
-				//$arrEdit['description']		 = strtr($arrEdit["description"],array("<br>"=>"\r\n"));
 			}
 		}
 	}
@@ -156,12 +152,6 @@
 	
 	$arr_user_tables = array();
 	$arr_user_tables["none"] = "Выбрать таблицу";
-	// ksort($TblList);
-	// reset($TblList);
-	// while(list($key,$val) = each($TblList)){
-		// $arr_user_tables[$TblList[$key]['name']] = $TblList[$key]['name'].": ".$TblList[$key]['description'];
-	// }
-	
 	if($result1 = $sql->sql_ShowTableFromBD()){
 		foreach($result1 as $key => $t_name){
 			$tName = str_replace($sql->prefix_db, "", $t_name);

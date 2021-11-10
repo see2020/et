@@ -14,12 +14,7 @@
 			foreach($TblSetting["sortfieldsearch"] as $key => $val){
 				if($TblSetting[$key]["type"] != "support"){
 					
-					// if(isset($_GET[$TblSetting[$key]["name"]]) 
-						// && $_GET[$TblSetting[$key]["name"]] != "" 
-						// && $TblSetting[$key]["name"] != $TblFieldPrimaryKey 
-						// || ($_GET[$TblSetting[$key]["name"]."_start"] != "" && $_GET[$TblSetting[$key]["name"]."_end"] != "")){
-						
-					if(isset($_GET[$TblSetting[$key]["name"]]) && $TblSetting[$key]["name"] != $TblFieldPrimaryKey 
+					if(isset($_GET[$TblSetting[$key]["name"]]) && $TblSetting[$key]["name"] != $TblFieldPrimaryKey
 						|| (
 							isset($_GET[$TblSetting[$key]["name"]."_start"]) && isset($_GET[$TblSetting[$key]["name"]."_end"]) &&
 							$_GET[$TblSetting[$key]["name"]."_start"] != "" && $_GET[$TblSetting[$key]["name"]."_end"] != ""

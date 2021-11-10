@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * download.php - скачивание файлов из форм
+ *
+ */
 	session_start();
 
 	include("cfg.php");

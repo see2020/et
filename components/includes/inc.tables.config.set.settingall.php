@@ -4,9 +4,6 @@
 	$allSettings["TblPath"]		 = (isset($arrTblPath))?$arrTblPath:"";
 	$allSettings["ut_class"]	 = $ut;
 	
-	// echo Message("1");
-	// echo Message(ParseArrForLog($allSettings["TblPath"]));
-	
 	// не текстовые обработчики полей
 	// для списка
 	$allSettings["includes"]["list_fields"]	 = array("support","date","directory_id","selectarea","radiobutton","varbool","file","link","image","password","list_string","list_link");
@@ -14,7 +11,6 @@
 	$allSettings["includes"]["form_fields"]	 = array("date","directory_name","directory_id","selectarea","radiobutton","number","textarea","varbool","file","image","hide","password","list_string","list_link");
 	
 	// уровень доступа
-	//$allSettings["access"][$_SESSION[D_NAME]['user']['UserType']]
 	$allSettings["access"]["read"]	 = "read";
 	$allSettings["access"]["new"]	 = "read,new";
 	$allSettings["access"]["edit"]	 = "read,new,edit";

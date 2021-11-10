@@ -1,5 +1,7 @@
 <?php
-	
+/**
+ * func_user.php - функции для работы с пользователями
+ */
 	function usr_GetUserTables($sql,$id_user = 0){
 		$ret_arr = array();
 		if($id_user == 0){return($ret_arr);}

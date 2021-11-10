@@ -4,13 +4,11 @@
 html, body {
 margin: 0;
 padding: 0;
-/*font-size: 80%;*/
  font-size: 11px;
  font-family: Arial, Helvetica, sans-serif;
 background-color: #d6e5f4;
 
 }
-
 
 a:hover {
 	color: #9370db;
@@ -43,7 +41,6 @@ a .img_btn{
 }
 p {
 	line-height: 1.0em;
-	/*text-indent: 1em;*/
 }
 
 .panel_title{
@@ -53,11 +50,7 @@ p {
 	color: #000000;
 	padding: 4px 0 0 10px;
 }
-/*
-.panel_title span {
-	font: bold 11px/20px Arial;
-}
-*/
+
 .panel_btn{
 	background: url(images/ptbg.gif);
 	height: 20px;
@@ -68,9 +61,6 @@ p {
 }
 
 .panel_btn_control{
-
-	/*font-weight: bold;*/
-	/*color: #000000;*/
 	padding: 5px 0 5px 5px;
 	border-top: 1px solid #ffffff;
 	margin: 15px 0 0 0;
@@ -85,7 +75,6 @@ p {
 	font-size: 11px;
 }
 
-
 #inputArea input{
 	height: 20px;
 }
@@ -93,15 +82,13 @@ p {
 		height: 24px;
 }
 
-
 #inputArea input, #inputArea select, #inputArea textarea{
 	border: 1px solid #00bfff;
 	font-size: 12px;
 }
 
-
 #inputArea input, #inputArea select, #inputArea textarea{
-	/*width: 250px;*/
+
 }
 
 #inputArea input[readonly="readonly"]{
@@ -116,9 +103,6 @@ p {
 }
 
 #inputArea input[type="button"], #inputArea input[type="submit"] {
-	/*background: #ccccff;*/
-	/*border: 1px solid #00bfff;*/
-	/*font-weight: bold;*/
 	cursor: pointer;
 	width: 150px;
 }
@@ -127,7 +111,6 @@ p {
 	width: 30px;
 }
 #inputArea input[type="button"].btn_add:hover{
-	/*color:#00bfff;*/
 	font-weight: bold;
 }
 
@@ -135,7 +118,6 @@ p {
 	font-size: 13px;
 	font-weight: bold;
 }
-
 
 .sel_field{
 	border: 1px solid #00bfff;
@@ -146,7 +128,6 @@ p {
 .sel_field input, .sel_field input[type="button"].btn_add{
 	border: 0px solid #00bfff !important;
 }
-
 
 .tip {
 	color: #fff;

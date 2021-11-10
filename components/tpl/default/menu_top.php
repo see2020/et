@@ -2,13 +2,9 @@
 
 	if(isset($_GET['tbl'])){
 		$tmpArr = array(
-	
 			5 => array(
-				//"link" => (($TblList[$TblName]['lnk']=="")?"?tbl=".$TblList[$TblName]['name']."":$TblList[$TblName]['lnk']),
 				"link" => "?tbl=".$_GET["tbl"],
-				//"img" => "list.gif",
 				"img" => "main-list.png",
-				//"title" => "К списку: ".$TblName."",
 				"title" => "К списку: ".$tbl_description."",
 			),
 
@@ -16,7 +12,6 @@
 			10 => array(
 				"link" => "".$PageLink."&id=0&event=edit",
 				"img" => "add.gif",
-				// "title" => "Добавить запись в текущую таблицу: ".$TblName."",
 				"title" => "Добавить запись в текущую таблицу: ".$tbl_description."",
 			),
 		);
@@ -91,26 +86,6 @@
 			"title" => "Поиск по текущей таблице: ".($TblName??"")."",
 		),
 		
-/*
-		1120 => array("link" => "","img" => "","title" => "<form method='get'  name='srch_tpl' id='srch_tpl' action='?tbl=".$_GET["tbl"]."&event=serach'>",),
-		1121 => array(
-			"link" => "",
-			"img" => "",
-			"title" => "
-				<input type='hidden' name='tbl' id='tbl' value='".$_GET["tbl"]."'>
-				<input type='hidden' name='srch' id='srch' value='1'>
-				<input type='text' name='allfield' id='allfield' value='".((isset($_GET["allfield"]))?$_GET["allfield"]:"")."' style='border: 1px solid ".((isset($_GET["srch"]))?"red":"#00bfff")."; margin:0px;width: 100px; height:18; font-size:10px;'>
-			",
-			"width" => false,
-		),
-		1122 => array(
-			"link" => "javascript: document.srch_tpl.submit();",
-			"img" => "page-next.gif",
-			"title" => "Найти",
-		),
-		1123 => array("link" => "","img" => "","title" => "</form>",),
-*/
-		
 		1120 => array("link" => "","img" => "","title" => "
 		<form method='get'  name='srch_tpl' id='srch_tpl' action='?tbl=".((isset($_GET["tbl"]))?$_GET["tbl"]:($TblName??""))."&event=serach'>
 		<input type='hidden' name='tbl' id='tbl' value='".((isset($_GET["tbl"]))?$_GET["tbl"]:($TblName??""))."'>
@@ -118,16 +93,11 @@
 		<input type='text' name='allfield' id='allfield' value='".((isset($_GET["allfield"]))?$_GET["allfield"]:"")."' style='border: 1px solid ".((isset($_GET["srch"]))?"red":"#00bfff")."; margin:0px;width: 100px; height:18; font-size:10px;'>
 		</form>
 		",),
-		//<a href='javascript: document.srch_tpl.submit();' ><img src='./components/ico/page-next.gif' title='Найти'></a>
 		1122 => array(
 			"link" => "javascript: document.srch_tpl.submit();",
 			"img" => "page-next.gif",
 			"title" => "Найти",
 		),
-		
-		
-		
-		
 		1124 => array(
 			"link" => $PageLink,
 			"img" => "cross.gif",
@@ -135,18 +105,13 @@
 			"attributes" => array("id" => "showfrmsearch"),
 		),
 	);
-	
-	
-	
+
 	if($upMenuType== 1){
 		echo mTplMenu(mShowMenu($tmpArr, $arrSetting['Path']['ico']));
 	}
 	elseif($upMenuType == 2){
 		echo mTplMenu1(mShowMenu1($tmpArr, $arrSetting['Path']['ico']));
 	}
-	
-	
 	unset($tmpArr);
-
  ?>
 

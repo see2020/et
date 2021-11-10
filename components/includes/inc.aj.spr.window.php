@@ -1,7 +1,6 @@
 <?php
 /**
- * inc.aj.spr.autocomplete.php.php
- * Окно выбора из таблиц с типом справочник
+ * inc.aj.spr.window.php - Окно выбора из таблиц с типом справочник
  *
  * "/aj.php?af=spr.window".
  * "&selected_val=".spr_JsUrlEscape($qChange[$TblSetting[$key]['name']]).

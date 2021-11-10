@@ -3,8 +3,7 @@
 		// если эта форма для редактирования справочника 
 		$arrTableSpr["table_name"]			 = $TblSetting["table"]['name'];
 		$arrTableSpr["order_by"]			 = $TblSetting["table"]["directory_type"]." desc".(($TblSetting["table"]['order']!="")?", ".$TblSetting["table"]['order']:"");
-		// $arrTableSpr["order_by"]			 = $TblSetting["table"]["directory_type"]." desc";
-		$arrTableSpr["PrimaryKey"]			 = $TblSetting["table"]['PrimaryKey']; 
+		$arrTableSpr["PrimaryKey"]			 = $TblSetting["table"]['PrimaryKey'];
 		$arrTableSpr["id"]					 = $TblSetting["table"]['PrimaryKey']; // идентификатор записи
 		$arrTableSpr["id_root"]				 = $TblSetting["table"]['directory_root']; // поле с значениями родительской записи
 		$arrTableSpr["field_name"]			 = $TblSetting["table"]['directory_name']; // название поля для вывода в списках

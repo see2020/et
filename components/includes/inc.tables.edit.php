@@ -8,7 +8,6 @@
 			// доступность проверяем только по доступу к таблице
 			// если у пользователя к данной таблице есть определнный доступ "new", "read", "edit", ...
 			if(usr_AccessTable($TblSetting["table"]["name"],"new")){$u_access = true;}
-			//if(usr_Access("new")){$u_access = true;}
 			else{
 				echo Message("Недостаточно прав на изменение этого раздела te3", "error");
 				$u_access = false;

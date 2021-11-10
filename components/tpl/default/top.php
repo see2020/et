@@ -82,25 +82,6 @@ else{
 		if($_GET['event']=="tblconfig" || $_GET['event']=="tblconfiglist" || $_GET['event']=="iniconfig" || $_GET['event']=="iniconfig1") {
 ?>
 
-<script type="text/javascript">
-/*
-$(document).ready(function() {
-	$('.title').append('<span></span>');
-	$('.post span').each(function() {
-		var trigger = $(this), state = false, el = trigger.parent().next('.entry');
-		trigger.click(function(){
-			state = !state;
-			el.slideToggle();
-			trigger.parent().parent().toggleClass('inactive');
-		});
-		
-	});
-	$('.post').addClass("inactive");
-	$('.entry').css("display","none");
-});
-*/
-</script>
-
 <style>
 .post {
 	padding: 10px 20px;
@@ -199,7 +180,6 @@ $(document).ready(function() {
 </div>
 
 </div>
-<?php //if(!$PrintPage){ ?>
 <?php if(empty($PrintPage)){ ?>
 <div style="margin-top: 49px;"></div>
 <?php } ?>

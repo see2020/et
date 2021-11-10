@@ -8,8 +8,6 @@
 	$_GET[$TblSetting[$key]['name']]??"",
 	spr_get_element_nav($sql,$arr_spr_cfg, $_GET[$TblSetting[$key]['name']]??""),
 		"select_".$TblSetting[$key]['name'],
-//		$cmsPathRelative."/spr_window.php".
-//			"?selected_val=".spr_JsUrlEscape($_GET[$TblSetting[$key]['name']]??"").
 		ET_PATH_HTML . "/aj.php?af=spr.window".
 			"&selected_val=".spr_JsUrlEscape($_GET[$TblSetting[$key]['name']]??"").
 			"&field_type=".$TblSetting[$key]['type'].

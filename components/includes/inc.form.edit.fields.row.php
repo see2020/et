@@ -5,9 +5,7 @@
 	if($TblSetting[$key]['required']){
 		$nm_field .= " <span style='color:red;font-size:10px;'>(обязательно к заполнению)</span>";
 	}
-	
-	//$readonly_var = ($TblSetting[$key]['readonly'] == 1)?true:false;
-	
+
 	// если запись новая, то разрешаем редактировать поля только для чтения
 	if($_GET[$TblFieldPrimaryKey] !=0 ){
 		$readonly_var = ($TblSetting[$key]['readonly'] == 1)?true:false;

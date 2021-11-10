@@ -4,17 +4,12 @@
 		$return_id = "&return_".$TblFieldPrimaryKey."=".((isset($_GET[$TblFieldPrimaryKey]))?$_GET[$TblFieldPrimaryKey]:"id");
 	}
 	
-	//$tmpLnk	 = $PageLink."&".$TblFieldPrimaryKey."=".$query[$TblFieldPrimaryKey]."&event=change&field=".$TblSetting[$key]['name'].$return_id.$PageLinkSrch.$lnk_order_by;
-	//$tmpLnk2 = "./ax_varbool.php?tbl=".$_GET['tbl']."&".$TblFieldPrimaryKey."=".$query[$TblFieldPrimaryKey]."&event=change&field=".$TblSetting[$key]['name'].$return_id.$PageLinkSrch.$lnk_order_by;
-	//$tmpLnk2 = "./aj.php?tbl=".((isset($_GET['tbl']))?$_GET['tbl']:$TblSetting["table"]["name"])."
 	$tmpLnk2 = "";
 	if(isset($_GET['tbl'])){
 		$tmpLnk2 = "./aj.php?tbl=".$_GET['tbl']."&af=varbool&".$TblFieldPrimaryKey."=".$query[$TblFieldPrimaryKey]."&event=change&field=".$TblSetting[$key]['name'].$return_id.($PageLinkSrch??"").($lnk_order_by??"");
 	}
 
-	
 	if($TblSetting[$key]['link'] != ""){
-		//$tmpLnk	 = SetTplLnk($tmpArrSetField, $query, $TblSetting[$key]['link']);
 		$tmpLnk2 = SetTplLnk($tmpArrSetField, $query, $TblSetting[$key]['link']);
 	}
 	
@@ -36,9 +31,6 @@
 		// доступность проверяем только по доступу к таблице
 		// если у пользователя к данной таблице есть определнный доступ "new", "read", "edit", ...
 		if(usr_AccessTable($TblSetting["table"]["name"],"edit")){
-			//if(usr_Access("edit")){
-			//$ShowRow = fLnk($tmpName, $tmpLnk, array("target" => (($TblSetting[$key]['link_newwindow']=="1")?"_blank":""),"style" => $TblStatusColored));
-			//$tmp_change_id = $TblSetting[$key]['name'].$query[$TblFieldPrimaryKey]."-".uniqid();
 			$tmp_change_id = $TblSetting[$key]['name'].$query[$TblFieldPrimaryKey]."-5c5937a8caba0";
 			$ShowRow = "<a href='javascript:void(0);' id='".$tmp_change_id."'
 				".SetAttributes(array("style" => $TblStatusColored))." 
@@ -51,7 +43,6 @@
 						}
 					});	
 				\">".$tmpName."</a>";
-				//\">".$tmpLnk2." ".$tmpName."</a>";
 		}
 		else{
 			$ShowRow = "";

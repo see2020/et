@@ -1,4 +1,7 @@
 <?php
+/**
+ * dump.php - копия таблиц
+ */
 	session_start();
 	
     include("cfg.php");
@@ -86,13 +89,6 @@
 					if($sql->sql_err){
 						echo Message("<b>MYSQL ERROR:</b><br> ".$sql->sql_err,"error");
 					}
-//					else{
-						// SHOW TABLES FROM `domen`;
-						// SHOW COLUMNS FROM `dm_dv`;
-						// echo '<pre>';
-						// print_r($result2);
-						// echo '</pre>';
-//					}
 				}
 				echo '<b>Обработка завершена</b><br>';
 				echo 'Обработано строк: '.$valCounter.'<br>';

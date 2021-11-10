@@ -7,7 +7,6 @@
 		if(!empty($TblSetting[$key]) && $TblSetting[$key]["visible"] == 1){
 			$tpl_name_field	 = "field_head";
 			$tpl_path		 = $TblDefTplPath;
-			//$allSettings["TblPath"]["theme"]
 			if($TblSetting[$key]['theme'] != ""){
 				if(file_exists($allSettings["TblPath"]["theme"]."/".trim($TblSetting[$key]['theme'])."_head.php")){
 					$tpl_name_field	 = trim($TblSetting[$key]['theme'])."_head";
@@ -24,15 +23,13 @@
 	$show_row_head = GetTpl("row_head", array("field_head" => $show_field), $TblDefTplPath);
 
 	$tblWhere = ($TblSetting["table"]['StatusField']!="" && $TblSetting["table"]['AllRows']=="0" )?"where `".$TblSetting["table"]['StatusField']."`='1'":"where `".$TblFieldPrimaryKey."`<>'0'";
-	//$tblOrder = ($arrAction["order_by"]!="")?"ORDER BY ".$arrAction["order_by"]:"";
 	if($TblSetting["table"]['order'] != ""){
 		$tblOrder = "ORDER BY ".$TblSetting["table"]['order'];
 	}
 	else{
 		$tblOrder = " ORDER BY ".$TblSetting["table"]["directory_type"]." DESC, ".$TblSetting["table"]["directory_name"]." ASC";
 	}
-	
-	
+
 	$tblWhereField = "";
 	foreach($TblSetting["sortfield"] as $key=>$val){
 		if(!empty($TblSetting[$key]) && $TblSetting[$key]["visible"] == 1

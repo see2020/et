@@ -1,5 +1,7 @@
 <?php
-	//inc.aj.varbool.php
+/**
+ * inc.aj.varbool.php - обработка поля с типом varbool в списке
+ */
 	$status_field = trim($_GET['field']);
 	//if(usr_Access("edit")){}else{echo Message("Недостаточно прав на изменение этого раздела", "error");exit;}
 	

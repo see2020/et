@@ -59,24 +59,6 @@ class class_txt{
 // КОНЕЦ СТРОКОВЫЕ ОПЕРАЦИИ
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	
-	//убираем из строки все лишнее для получения корректного имени файла
-	// function txtGetFileName($string_fname = ""){
-		// if($string_fname!=""){
-			// $this->txtSpaceRw = true;
-			// $string_fname = $this->txtTranslit($string_fname,true);
-			// $string_fname = $this->txtClearOtherSymbol($string_fname,true);
-			// $this->txtSpaceRw = false;
-			
-			// $string_fname = strtr($string_fname,array("-"=>"_"));
-			
-			// return($string_fname);
-		// }
-		// else{
-			// return(false);
-		// }
-	// }
-	
 	//подготавливаем текст к записи в базу
 	//очищаем тект от не нужных символов и зменяем не угодные символы на угодные :)
 	// если парметр установлен $tg='' то вырезаем вообще все теги
@@ -106,7 +88,6 @@ class class_txt{
 		$this->kCTAllowTag.=", <dl>,</dl>,<dt>,</dt>,<dd>,</dd>,<marquee>,</marquee>,<noindex>,</noindex>,<noscript>,</noscript>";
 		//вырезаем не разрешенные теги
 		$tags = "";
-		//$tags = $this->txtArrSetting["Edit"]['editor_allow_tag'];
 		if(!$this->kClearAllTag){
 			$tags = "\r, \n".$this->kCTAllowTag.(($tags!='')?", ":"").$tags;
 		}

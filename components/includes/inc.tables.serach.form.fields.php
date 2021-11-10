@@ -2,15 +2,13 @@
 	<?php
 		$tmp_list_type = array("date","directory_name","directory_id","selectarea","radiobutton","number","varbool",);
 
-		//$stype_arr = TypeSearch();
 		asort($TblSetting['sortfieldsearch']);
 		foreach($TblSetting["sortfieldsearch"] as $key=>$val){
 			if($TblSetting[$key]['type'] != 'support' && $TblSetting[$key]["for_search"] == "1"){
 				
 				// набор действий для разных типов полей
 				$stype_arr = TypeSearch();
-				//unset($stype_arr[10],$stype_arr[11],$stype_arr[12],$stype_arr[13],$stype_arr[14],$stype_arr[15],$stype_arr[16],$stype_arr[17]);
-				if($TblSetting[$key]['type'] == "text" 
+				if($TblSetting[$key]['type'] == "text"
 				|| $TblSetting[$key]['type'] == "textarea"
 				|| $TblSetting[$key]['type'] == "password"
 				|| $TblSetting[$key]['type'] == "directory_name"
@@ -52,7 +50,6 @@
 					$TblSetting[$key]['name']."_tp", 
 					$stype_arr, 
 					(isset($_GET[$TblSetting[$key]['name']."_tp"]))?$_GET[$TblSetting[$key]['name']."_tp"]:"", 
-					//$_GET[$TblSetting[$key]['name']."_tp"]??"", 
 					array("id"=>$TblSetting[$key]['name']."_tp","style"=>"width: 100px;")
 				);
 				
