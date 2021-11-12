@@ -41,7 +41,9 @@
 		
 	if($TblSetting["table"]["name"] == ""){
 		$ut->utLog("Не задана стартовая таблица. ".__FILE__);
-		echo Message("Не задана стартовая таблица<br><a href='./quit.php'>Выход</a> | <a href='./tables.php'>На главную</a>", "error");
+		echo Message("Не задана стартовая таблица<br>
+			скорее всего необходимо выполнить автонастройку<br>
+			<a href='./quit.php'>Выход</a> | <a href='./tables.php'>На главную</a>", "error");
 		exit;
 	}
 	
