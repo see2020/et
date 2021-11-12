@@ -433,8 +433,17 @@
 		
 	}
 
-	// получение массива с данными для поляе типа select и radio
-	function spr_GetArrTypeData($sql, $arrSetting, $TblSetting, $key){
+
+/**
+ * получение массива с данными для поляе типа select и radio
+ * @param $sql
+ * @param $arrSetting
+ * @param $TblSetting
+ * @param $key
+ * @param $typeFace - где будет выводиться, список (list) или форма редактирования (edit)
+ * @return array
+ */
+	function spr_GetArrTypeData($sql, $arrSetting, $TblSetting, $key, $typeFace = 'edit'){
 
 		$return_arr = array();
 
@@ -443,14 +452,20 @@
 			include($arrSetting['Path']['tbldata']."/".$TblSetting[$key]['directory_table']."/".$TblSetting[$key]['directory_table'].".php");
 			$TblSpr = $arrConfig;
 		}
-		if(count($TblSpr) ==0 ){
+		if(count($TblSpr) == 0 ){
 			return $return_arr;
 		}
-		
+
+		$sufix = ($typeFace != 'list')?'_edit':'';
+
 		$result = $sql->sql_query("SELECT * FROM  ".$sql->prefix_db.$TblSetting[$key]['directory_table']." where `".$TblSpr["table"]["StatusField"]."`='1' ORDER BY ".$TblSpr["table"]["directory_name"]." asc");
 		if($sql->sql_rows($result)){
 			while($query = $sql->sql_array($result)){
-				$return_arr[$query[$TblSpr["table"]["PrimaryKey"]]] = $query[$TblSpr["table"]["directory_name"]];	
+				$return_arr[$query[$TblSpr["table"]["PrimaryKey"]]] = $query[$TblSpr["table"]["directory_name"]];
+				// дополнительное описание к вдимой части
+				for($i = 2; $i <= 5; $i++){
+					$return_arr[$query[$TblSpr["table"]["PrimaryKey"]]] .= (!empty($TblSpr['table']['directory_name'.$sufix.$i]))?' - ' . $query[$TblSpr["table"]['directory_name'.$sufix.$i]]:'';
+				}
 			}
 		
 		}

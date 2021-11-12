@@ -3,7 +3,7 @@
 	echo "<span class='field_name'>".$nm_field.":</span><br>";
 	
 	if($TblSetting[$key]['directory_table'] != ""){
-		$tmp_arr_td = spr_GetArrTypeData($sql, $arrSetting, $TblSetting, $key);
+		$tmp_arr_td = spr_GetArrTypeData($sql, $arrSetting, $TblSetting, $key,'edit');
 	}
 	else{
 		$tmp_arr_td = GetArrTypeData($TblSetting[$key]['type_data']);

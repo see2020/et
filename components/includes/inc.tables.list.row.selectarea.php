@@ -1,6 +1,6 @@
 <?php
 	if($TblSetting[$key]['directory_table'] != ""){
-		$tmp_arr_td = spr_GetArrTypeData($sql, $arrSetting, $TblSetting, $key);
+		$tmp_arr_td = spr_GetArrTypeData($sql, $arrSetting, $TblSetting, $key,'list');
 	}
 	else{
 		$tmp_arr_td = GetArrTypeData($TblSetting[$key]['type_data']);
