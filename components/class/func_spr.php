@@ -438,11 +438,14 @@
 
 		$return_arr = array();
 
-		$TblCfg = new class_ini();
-		$TblCfg->fINIFileName = $arrSetting['Path']['tbldata']."/".$TblSetting[$key]['directory_table']."/".$TblSetting[$key]['directory_table'].".ini";
-		$TblCfg->fINIInitArray();
-		$TblSpr = $TblCfg->fINIArray;
-		
+		$TblSpr = array();
+		if(file_exists($arrSetting['Path']['tbldata']."/".$TblSetting[$key]['directory_table']."/".$TblSetting[$key]['directory_table'].".php")){
+			include($arrSetting['Path']['tbldata']."/".$TblSetting[$key]['directory_table']."/".$TblSetting[$key]['directory_table'].".php");
+			$TblSpr = $arrConfig;
+		}
+		if(count($TblSpr) ==0 ){
+			return $return_arr;
+		}
 		
 		$result = $sql->sql_query("SELECT * FROM  ".$sql->prefix_db.$TblSetting[$key]['directory_table']." where `".$TblSpr["table"]["StatusField"]."`='1' ORDER BY ".$TblSpr["table"]["directory_name"]." asc");
 		if($sql->sql_rows($result)){
