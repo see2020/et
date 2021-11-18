@@ -10,6 +10,7 @@
 		}
 		
 		public function init(){
+			$arrConfig = [];
 			if(file_exists($this->cfgFile) && is_readable($this->cfgFile)){
 				include($this->cfgFile);
 				$this->cfgArray = $arrConfig;
@@ -82,7 +83,7 @@
 		
 		public function set($section = "",$key = "", $val = ""){
 			$val = strtr($val,array("'"=>"&prime;","\""=>"&quot;",));
-			if($section != ""){
+			if(!empty($section)){
 				$this->cfgArray[$section][$key] = $val;
 			}
 			else{
@@ -90,7 +91,7 @@
 			}
 		}
 		public function get($section = "",$key = ""){
-			if($section != ""){
+			if(!empty($section)){
 				return($this->cfgArray[$section][$key]);
 			}
 			else{
