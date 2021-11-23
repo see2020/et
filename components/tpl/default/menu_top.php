@@ -25,10 +25,11 @@
 		);				
 	}
 	
-	if($upMenuType == 1){
-		$tmpArr+= mUpMenuArr($TblList);
-	}
-	elseif($upMenuType == 2){
+//	if($upMenuType == 1){
+//		$tmpArr+= mUpMenuArr($TblList);
+//	}
+//	elseif($upMenuType == 2){
+		// менюшку всегда формируем из таблицы меню
 		if($sql->sql_table_exist($arrSetting["Other"]["tablesysmenu"])){
 			$tmpArr+= mUpMenuArrTbl($sql);
 		}
@@ -38,14 +39,15 @@
 				11150 => array(
 					"link" => "#",
 					"img" => "",
-					"title" => $arrSetting['Other']['upMenuTypeName']??""."<img src='".$arrSetting['Path']['ico']."/arrow.gif'>",
+//					"title" => $arrSetting['Other']['upMenuTypeName']??""."<img src='".$arrSetting['Path']['ico']."/arrow.gif'>",
+					"title" => "<img src='".$arrSetting['Path']['ico']."/arrow.gif'>",
 					"attributes" => array("target" => "_blank"),
 					"submenu" => mUpMenuArr($TblList),
 				),
 			);
 		}
 
-	}
+//	}
 
 	if(usr_Access("admin")){
 		$tmpArr+= array(
@@ -106,12 +108,12 @@
 		),
 	);
 
-	if($upMenuType== 1){
-		echo mTplMenu(mShowMenu($tmpArr, $arrSetting['Path']['ico']));
-	}
-	elseif($upMenuType == 2){
+//	if($upMenuType== 1){
+//		echo mTplMenu(mShowMenu($tmpArr, $arrSetting['Path']['ico']));
+//	}
+//	elseif($upMenuType == 2){
 		echo mTplMenu1(mShowMenu1($tmpArr, $arrSetting['Path']['ico']));
-	}
+//	}
 	unset($tmpArr);
  ?>
 

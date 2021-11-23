@@ -16,6 +16,7 @@ v1.17 - переработка кода
 		ALTER TABLE `tst_tblfiles` ADD `type_row` VARCHAR(11) NOT NULL DEFAULT 'list' COMMENT 'хранилище ссылок на файлы. list - список для вкладки, field_once - для поля файла, field_list - для поля списка фалов' AFTER `tbl`;
 		ALTER TABLE `tst_tbllist` ADD `type_row` VARCHAR(11) NOT NULL DEFAULT 'list' COMMENT 'хранилище для списков. list - список для вкладки, field_list - для поля списка' AFTER `tbl`;
 		ALTER TABLE `tst_tbllist` ADD `lnk` VARCHAR(150) NOT NULL DEFAULT '' COMMENT 'Если используется для поля списка ссылок' AFTER `descr`;
+	меню всегда из таблицы, параметр $arrConfig['Other']['upMenuType'] = '2' становится не актуальным
 
 v1.16 - Изменения для версии PHP 7+
 	добавлена настройка для отображения названия колонки в ячейке
