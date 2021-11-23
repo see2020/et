@@ -13,7 +13,7 @@
 	// если не задано имя таблицы используем имя по умолчанию
 	$TblNameDefault	 = (!isset($arrSetting['Table']['DefaultTable']) || $arrSetting['Table']['DefaultTable'] == "")?"":$arrSetting['Table']['DefaultTable'];
 	if(isset($_SESSION[D_NAME]['user']['table_default']) && $_SESSION[D_NAME]['user']['table_default'] != ""){$TblNameDefault = $_SESSION[D_NAME]['user']['table_default'];}
-	$TblName		 = (isset($_GET['tbl']))?trim($_GET['tbl']):$TblNameDefault;
+	$TblName		 = (isset($_GET['tbl']))?trim($_GET['tbl']):$TblNameDefault; // TODO нужна прверка $_GET['tbl']
 	$PageLink		 = "";
 	
 	$TblSetting = array();

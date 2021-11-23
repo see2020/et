@@ -69,12 +69,6 @@ if($TblSetting["table"]["is_directory"] == "1" && $qChange[$TblSetting[$TblSetti
 		var str_field = "";
 		
 <?php
-	// $arrTypeField["selectarea"]	 = "selectarea";
-	// $arrTypeField["radiobutton"]	 = "radiobutton";
-	// $arrTypeField["varbool"]		 = "varbool";
-	// $arrTypeField["support"]		 = "support";
-	// $arrTypeField["hide"]		 = "hide";
-
 	// текстовые поля
 	$v_txt = array("text","textarea","link","directory_name","file","image","password","list_string","list_link");
 	// поля с числовыми значениями
