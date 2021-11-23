@@ -29,7 +29,8 @@
 		$_SESSION[D_NAME]['user']['Password']		 = "";
 		$_SESSION[D_NAME]['user']['usrAccess']		 = "root"; // уровень разрешений для пользователя 
 		$_SESSION[D_NAME]['user']['usrtblAccess']	 = array(); // уровень разрешений для таблиц пользователя 
-		
+		$_SESSION[D_NAME]['user']['UsePassword']	 = $arrSetting['Access']['UsePassword']; // включена или нет авторизация по паролю
+
 		//table_default
 		if($result1 = $sql->sql_ShowTableFromBD()){
 			foreach($result1 as $key => $t_name){

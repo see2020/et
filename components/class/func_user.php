@@ -79,6 +79,7 @@
 	
 	// проверяем разрешиния пользователя 
 	function usr_Access($access_level = ""){
+		if($_SESSION[D_NAME]['user']['UsePassword'] == 0){return true;} // если авторизация по паролю отключена, то и проверка не требуется
 		if(!isset($_SESSION[D_NAME]['user'])){return(FALSE);}
 		if(empty($_SESSION[D_NAME]['user']['Access'])){return(FALSE);}
 		if($access_level == ""){return(FALSE);}		
@@ -88,6 +89,7 @@
 	}
 	// проверяем разрешения пользователя на таблицу
 	function usr_AccessTable($table_name = "", $access_level = ""){
+		if($_SESSION[D_NAME]['user']['UsePassword'] == 0){return true;} // если авторизация по паролю отключена, то и проверка не требуется
 		if(!isset($_SESSION[D_NAME]['user'])){return(FALSE);}
 		if($table_name == ""){return(FALSE);}	
 		$table_name = trim($table_name);
