@@ -35,7 +35,7 @@
 	// для списка
 	$allSettings["includes"]["list_fields"]	 = array("support","date","directory_id","selectarea","radiobutton","varbool","file","link","image","password","list_string","list_link");
 	// для формы
-	$allSettings["includes"]["form_fields"]	 = array("date","directory_name","directory_id","selectarea","radiobutton","number","textarea","varbool","file","image","hide","password","list_string","list_link");
+	$allSettings["includes"]["form_fields"]	 = array("date","datetime","directory_name","directory_id","selectarea","radiobutton","number","textarea","varbool","file","image","hide","password","list_string","list_link");
 
 	// уровень доступа
 	$allSettings["access"]["read"]	 = "read";

@@ -192,12 +192,14 @@
 		$arrTypeField["selectarea"]		 = "selectarea";
 		$arrTypeField["radiobutton"]	 = "radiobutton";
 		$arrTypeField["number"]			 = "number";
-		$arrTypeField["date"]			 = "date";
+		$arrTypeField["date"]			 = "date"; // если дата в таблице представлена в виде timestamp (int)
+		//TODO добавить обработку нового типа "datetime"
+		$arrTypeField["datetime"]		 = "datetime"; // если дата в таблице представлена в формате DateTime
 		$arrTypeField["varbool"]		 = "varbool";
 		$arrTypeField["support"]		 = "support";
 		$arrTypeField["link"]			 = "link";
-		$arrTypeField["directory_name"]	 = "directory_name";
-		$arrTypeField["directory_id"]	 = "directory_id";
+		$arrTypeField["directory_name"]	 = "directory_name"; // если берем только значение из справочника
+		$arrTypeField["directory_id"]	 = "directory_id"; // если привязываемся к значению справочника
 		$arrTypeField["file"]			 = "file";
 		$arrTypeField["image"]			 = "image";
 		$arrTypeField["hide"]			 = "hide";
@@ -669,6 +671,9 @@
 		}
 	}
 	
+	function frmInputDateTimeAdd($Setting, $field_name = "", $field_value = "", $attributes = array(),$width_field = "350",$ro = false){
+		if($field_name == ""){return(false);}
+	}
 	function frmInputDateAdd($Setting, $field_name = "", $field_value = "", $attributes = array(),$width_field = "350",$ro = false){
 		if($field_name == ""){return(false);}
 		
