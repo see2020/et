@@ -13,31 +13,35 @@
 		$u_access = false;
 		exit;
 	}
-	
-	$sql->sql_connect();
-	
-	$PageLink = "dump.php?tbl1=0";
 
-	// тема оформления	
-	$TblList = array();
-	$TblDefTplPath = $arrSetting['Path']['tpl'] . DS . $arrSetting['Table']['DefaultTpl'];
-	$TblSetting["table"]['name'] = "";
-	$TblSetting["table"]['ico'] = $arrSetting['Path']['ico'] . DS . "mysql_dump.gif";
-	$TblSetting["table"]['description'] = "Дамп таблиц";
-	if(file_exists($TblDefTplPath . DS . "top.php")){include($TblDefTplPath . DS . "top.php");}
+	echo 'В данный момент функция не доступна!';
+
+//	$sql->sql_connect();
+//
+//	$PageLink = "dump.php?tbl1=0";
+//
+//	// тема оформления
+//	$TblList = array();
+//	$TblDefTplPath = $arrSetting['Path']['tpl'] . DS . $arrSetting['Table']['DefaultTpl'];
+//	$TblSetting["table"]['name'] = "";
+//	$TblSetting["table"]['ico'] = $arrSetting['Path']['ico'] . DS . "mysql_dump.gif";
+//	$TblSetting["table"]['description'] = "Дамп таблиц";
+//	if(file_exists($TblDefTplPath . DS . "top.php")){include($TblDefTplPath . DS . "top.php");}
+
 ?>
-<div class='panel_btn'>
-	<table border='0' cellspacing='0' cellpadding='2'>
-	  <tr>
-		<td width='20' align='center' valign='middle'>&nbsp;</td>
-		<td align='center' valign='middle'><a href='<?php echo $PageLink; ?>'>Снять дамп</a></td>
-
-		<td width='20' align='center' valign='middle'>&nbsp;</td>
-		<td align='center' valign='middle'><a href='<?php echo $PageLink; ?>&queryrun=1'>Выполнить запрос</a></td>
-	  </tr>
-	</table>
-</div>
+<!--<div class='panel_btn'>-->
+<!--	<table border='0' cellspacing='0' cellpadding='2'>-->
+<!--	  <tr>-->
+<!--		<td width='20' align='center' valign='middle'>&nbsp;</td>-->
+<!--		<td align='center' valign='middle'><a href='--><?php //echo $PageLink; ?><!--'>Снять дамп</a></td>-->
+<!---->
+<!--		<td width='20' align='center' valign='middle'>&nbsp;</td>-->
+<!--		<td align='center' valign='middle'><a href='--><?php //echo $PageLink; ?><!--&queryrun=1'>Выполнить запрос</a></td>-->
+<!--	  </tr>-->
+<!--	</table>-->
+<!--</div>-->
 <?php
+/*
 		// настройки получения дампа
 		$dmpDropTableIfNotExists	 = $arrSetting['Dump']['dmpDropTableIfNotExists']; // 1/0
 		$dmpCreateTableIfNotExists	 = $arrSetting['Dump']['dmpCreateTableIfNotExists']; // 1/0
@@ -400,6 +404,7 @@
 		
 	if(file_exists($TblDefTplPath . DS . "bottom.php")){include($TblDefTplPath . DS . "bottom.php");}
 	$sql->sql_close();
+*/
 ?>
 
 

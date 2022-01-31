@@ -54,7 +54,9 @@
 		}
 	}
 
-	$arrClassInclude = array("sql.php","ut.php","url.php","text.php","sqlparser.php","func.php","func_spr.php","func_user.php","config.class.php","file.php");
+	$arrClassInclude = array("sql.php","ut.php","url.php","text.php"
+//	,"sqlparser.php"
+	,"func.php","func_spr.php","func_user.php","config.class.php","file.php");
 
 	foreach($arrClassInclude as $FNameClass) {
 		if(file_exists($PathClass . DS .$FNameClass)){

@@ -1,4 +1,10 @@
 <?php
+// Есть устаревшие определения
+//Deprecated: Array and string offset access syntax with curly braces is deprecated in D:\OpenServer\OpenServer\domains\edit_table\edit_table\components\class\sqlparser.php on line 28
+//Deprecated: Array and string offset access syntax with curly braces is deprecated in D:\OpenServer\OpenServer\domains\edit_table\edit_table\components\class\sqlparser.php on line 37
+//Deprecated: Array and string offset access syntax with curly braces is deprecated in D:\OpenServer\OpenServer\domains\edit_table\edit_table\components\class\sqlparser.php on line 46
+//Deprecated: Array and string offset access syntax with curly braces is deprecated in D:\OpenServer\OpenServer\domains\edit_table\edit_table\components\class\sqlparser.php on line 50
+//Deprecated: Array and string offset access syntax with curly braces is deprecated in D:\OpenServer\OpenServer\domains\edit_table\edit_table\components\class\sqlparser.php on line 52
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // 
 // CMS: BLD - 2011
