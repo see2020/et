@@ -9,10 +9,10 @@
 	if(!$readonly_var){
 		if(isset($TblSetting[$key]['maxlength']) && $TblSetting[$key]['maxlength'] != "" && $TblSetting[$key]['maxlength'] != 0){
 			$TblSetting[$key]['maxlength'] = (int)$TblSetting[$key]['maxlength'];
-			$number_var.= frmInput(array("type"=>"text", "name"=>$TblSetting[$key]['name'], "style"=>"width: ".((int)$width_field - 56 - 56 - 56 - 28)."px; ", "value"=>$qChange[$TblSetting[$key]['name']],"id"=>$TblSetting[$key]['name'],"maxlength"=>$TblSetting[$key]['maxlength'] ));
+			$number_var.= frmInput(array("type"=>"text", "name"=>$TblSetting[$key]['name'], "style"=>"width: ".((int)$width_field - 56 - 56 - 56 - 32)."px; ", "value"=>$qChange[$TblSetting[$key]['name']],"id"=>$TblSetting[$key]['name'],"maxlength"=>$TblSetting[$key]['maxlength'] ));
 		}
 		else{
-			$number_var.= frmInput(array("type"=>"text", "name"=>$TblSetting[$key]['name'], "style"=>"width: ".((int)$width_field - 56 - 56 - 56 - 28)."px; ", "value"=>$qChange[$TblSetting[$key]['name']],"id"=>$TblSetting[$key]['name'], ));
+			$number_var.= frmInput(array("type"=>"text", "name"=>$TblSetting[$key]['name'], "style"=>"width: ".((int)$width_field - 56 - 56 - 56 - 32)."px; ", "value"=>$qChange[$TblSetting[$key]['name']],"id"=>$TblSetting[$key]['name'], ));
 		}
 		
 		$number_var.= frmInput(array("type" => "button", "value" => "-100", "style"=>"".$st_all."width: 28px;", "onclick"=>"increase('".$TblSetting[$key]['name']."',-100);", "title"=>"Значение в поле -100"));

@@ -624,11 +624,11 @@
 		$return_field = "";
 		$return_field.= "<div class=\"sel_field\" style=\"width: ".$width_field."px;".$stl_ro."\">";
 		if(!$ro){
-			$return_field.= frmInput(array("type"=>"text", "name"=>$field_name, "style"=>"width: ".((int)$width_field - 31)."px; ", "value"=>$field_value, ) + $attributes);
+			$return_field.= frmInput(array("type"=>"text", "name"=>$field_name, "style"=>"border:0;width: ".((int)$width_field - 32)."px; ", "value"=>$field_value, ) + $attributes);
 			$return_field.= frmInput(array("type"=>"button", "style"=>"width: 28px; ", "value"=>"X", "OnClick"=>"document.getElementById('".$field_name."').value = '';", "title"=>"—бросить" ));
 		}
 		else{
-			$return_field.= frmInput(array("type"=>"text", "name"=>$field_name,"readonly"=>"readonly", "style"=>"width: ".((int)$width_field - 31)."px;", "value"=>$field_value, ) + $attributes);
+			$return_field.= frmInput(array("type"=>"text", "name"=>$field_name,"readonly"=>"readonly", "style"=>"border:0;width: ".((int)$width_field - 32)."px;", "value"=>$field_value, ) + $attributes);
 		}
 		$return_field.= "<div style=\"clear: both;padding: 0; margin: 0;\"></div>";
 		$return_field.= "</div>";
@@ -766,7 +766,7 @@
 		
 		if(!$ro){
 			if($field_value == ""){
-				$return_field.= frmInput(array("type"=>"file", "name"=>$field_name, "style"=>"width: ".((int)$width_field - 30)."px; ", "value"=>"",) + $attributes);
+				$return_field.= frmInput(array("type"=>"file", "name"=>$field_name, "style"=>"width: ".((int)$width_field - 32)."px; ", "value"=>"",) + $attributes);
 			}
 			else{
 				$return_field.= frmInput(array("type"=>"hidden", "name"=>$field_name, "style"=>"", "value"=>$field_value,) + $attributes);
