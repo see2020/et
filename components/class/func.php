@@ -624,11 +624,11 @@
 		$return_field = "";
 		$return_field.= "<div class=\"sel_field\" style=\"width: ".$width_field."px;".$stl_ro."\">";
 		if(!$ro){
-			$return_field.= frmInput(array("type"=>"text", "name"=>$field_name, "style"=>"width: ".((int)$width_field - 29)."px; ", "value"=>$field_value, ) + $attributes);
+			$return_field.= frmInput(array("type"=>"text", "name"=>$field_name, "style"=>"width: ".((int)$width_field - 31)."px; ", "value"=>$field_value, ) + $attributes);
 			$return_field.= frmInput(array("type"=>"button", "style"=>"width: 28px; ", "value"=>"X", "OnClick"=>"document.getElementById('".$field_name."').value = '';", "title"=>"Сбросить" ));
 		}
 		else{
-			$return_field.= frmInput(array("type"=>"text", "name"=>$field_name,"readonly"=>"readonly", "style"=>"width: ".((int)$width_field - 29)."px;", "value"=>$field_value, ) + $attributes);
+			$return_field.= frmInput(array("type"=>"text", "name"=>$field_name,"readonly"=>"readonly", "style"=>"width: ".((int)$width_field - 31)."px;", "value"=>$field_value, ) + $attributes);
 		}
 		$return_field.= "<div style=\"clear: both;padding: 0; margin: 0;\"></div>";
 		$return_field.= "</div>";
@@ -646,7 +646,7 @@
 			$return_field.= frmInput(array("type"=>"button", "style"=>"width: 28px; float:right;", "value"=>"&bull;", "OnClick"=>"alert(document.getElementById('".$field_name."').value);", "href"=>"javascript:void(0);", "title"=>"Показать пароль"));
 		}
 		else{
-			$return_field.= frmInput(array("type"=>"password", "name"=>$field_name,"readonly"=>"readonly", "style"=>"width: ".((int)$width_field - 29)."px;", "value"=>$field_value, ) + $attributes);
+			$return_field.= frmInput(array("type"=>"password", "name"=>$field_name,"readonly"=>"readonly", "style"=>"width: ".((int)$width_field - 31)."px;", "value"=>$field_value, ) + $attributes);
 			$return_field.= frmInput(array("type"=>"button", "style"=>"width: 28px; float:right;", "value"=>"&bull;", "OnClick"=>"alert('".$field_value."');", "href"=>"javascript:void(0);", ));
 		}
 		$return_field.= "<div style=\"clear: both;padding: 0; margin: 0;\"></div>";
@@ -689,10 +689,10 @@
 		}
 
 		if(!$ro){
-			$attr = array("type" => "text", "name" => $field_name, "value" => $tmp_dt,"style"=>"width: ".((int)$width_field - 22)."px; ",);
+			$attr = array("type" => "text", "name" => $field_name, "value" => $tmp_dt,"style"=>"width: ".((int)$width_field - 24)."px; ",);
 		}
 		else{
-			$attr = array("type" => "text", "name" => $field_name, "value" => $tmp_dt,"style"=>"width: ".((int)$width_field - 22)."px; ","readonly"=>"readonly",);
+			$attr = array("type" => "text", "name" => $field_name, "value" => $tmp_dt,"style"=>"width: ".((int)$width_field - 24)."px; ","readonly"=>"readonly",);
 		}
 		
 		$attributes = $attr + $attributes;
@@ -934,14 +934,14 @@
 		
 			$return_field.= "<span class=''>Название ссылки:</span><br>";
 			$return_field.= "<div class=\"sel_field\" style=\"width: ".$width_field."px;".$stl_ro."\">";
-			$return_field.= frmInput(array("type"=>"text", "name"=>$field_name."_lsname", "id"=>$field_name."_lsname", "style"=>"width: ".((int)$width_field - 30)."px; ", "value"=>"", ));
+			$return_field.= frmInput(array("type"=>"text", "name"=>$field_name."_lsname", "id"=>$field_name."_lsname", "style"=>"width: ".((int)$width_field - 32)."px; ", "value"=>"", ));
 			$return_field.= frmInput(array("type"=>"button", "style"=>"width: 28px; ", "value"=>"X", "OnClick"=>"$('#".$field_name."_lsname').val('');", "title"=>"Сбросить имя ссылки" ));
 			$return_field.= "<div style=\"clear: both;padding: 0; margin: 0;\"></div>";
 			$return_field.= "</div>";	
 			
 			$return_field.= "<span class=''>Ссылка:</span><br>";
 			$return_field.= "<div class=\"sel_field\" style=\"width: ".$width_field."px;".$stl_ro."\">";
-			$return_field.= frmInput(array("type"=>"text", "name"=>$field_name."_lslnk", "id"=>$field_name."_lslnk", "style"=>"width: ".((int)$width_field - 86)."px; ", "value"=>"", ));
+			$return_field.= frmInput(array("type"=>"text", "name"=>$field_name."_lslnk", "id"=>$field_name."_lslnk", "style"=>"width: ".((int)$width_field - 88)."px; ", "value"=>"", ));
 			$return_field.= frmInput(array("type"=>"button", "style"=>"width: 28px; ", "value"=>"add", "OnClick"=>"
 			var ".$field_name."_vl = $('#".$field_name."').val();
 			var ".$field_name."_ls = $('#".$field_name."_lslnk_area').html();
